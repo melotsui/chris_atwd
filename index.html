@@ -9,6 +9,8 @@
 	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
 	<meta name="author" content="AdminKit">
 	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
 
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
@@ -58,15 +60,15 @@
 					var html = '';
 					for(item of resultArray){
 						html += '<tr>';
-						html += '<td class="d-none d-xl-table-cell">'+item['Region_e']+'</td>';
-						html += '<td class="d-none d-xl-table-cell">'+item['District_e']+'</td>';
-						html += '<td class="d-none d-xl-table-cell">'+item['Market_e']+'</td>';
-						html += '<td class="d-none d-xl-table-cell">'+item['Address_e']+'</td>';
-						html += '<td class="d-none d-xl-table-cell">'+item['Business_Hours_e']+'</td>';
-						html += '<td class="d-none d-xl-table-cell">'+item['Contact_1']+' '+item['Contact_2']+'</td>';
-						html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;"><a href="" onclick="return false;">';
+						html += '<td class="d-none d-md-table-cell">'+item['Region_e']+'</td>';
+						html += '<td class="d-none d-md-table-cell">'+item['District_e']+'</td>';
+						html += '<td class="d-none d-md-table-cell">'+item['Market_e']+'</td>';
+						html += '<td class="d-none d-md-table-cell">'+item['Address_e']+'</td>';
+						html += '<td class="d-none d-md-table-cell">'+item['Business_Hours_e']+'</td>';
+						html += '<td class="d-none d-md-table-cell">'+item['Contact_1']+' '+item['Contact_2']+'</td>';
+						html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" onclick="return false;">';
 						html += '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 align-middle me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>';
-						html += '</a></div></td>';
+						html += '</a></div></td></tr>';
 					}
 					document.getElementById('dataBody').innerHTML = html;
                 }
@@ -131,15 +133,15 @@
 					var html = '';
 					for(item of resultArray){
 						html += '<tr>';
-						html += '<td class="d-none d-xl-table-cell">'+item['Region_e']+'</td>';
-						html += '<td class="d-none d-xl-table-cell">'+item['District_e']+'</td>';
-						html += '<td class="d-none d-xl-table-cell">'+item['Market_e']+'</td>';
-						html += '<td class="d-none d-xl-table-cell">'+item['Address_e']+'</td>';
-						html += '<td class="d-none d-xl-table-cell">'+item['Business_Hours_e']+'</td>';
-						html += '<td class="d-none d-xl-table-cell">'+item['Contact_1']+' '+item['Contact_2']+'</td>';
-						html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;"><a href="" onclick="return false;">';
+						html += '<td class="d-none d-md-table-cell">'+item['Region_e']+'</td>';
+						html += '<td class="d-none d-md-table-cell">'+item['District_e']+'</td>';
+						html += '<td class="d-none d-md-table-cell">'+item['Market_e']+'</td>';
+						html += '<td class="d-none d-md-table-cell">'+item['Address_e']+'</td>';
+						html += '<td class="d-none d-md-table-cell">'+item['Business_Hours_e']+'</td>';
+						html += '<td class="d-none d-md-table-cell">'+item['Contact_1']+' '+item['Contact_2']+'</td>';
+						html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" onclick="return false;">';
 						html += '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 align-middle me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>';
-						html += '</a></div></td>';
+						html += '</a></div></td></tr>';
 					}
 					document.getElementById('dataBody').innerHTML = html;
                 }
@@ -158,7 +160,7 @@
     </script>
 </head>
 
-<body>
+<body >
 	<div class="wrapper">
 		<nav id="sidebar" class="sidebar js-sidebar" >
 			<div class="sidebar-content js-simplebar">
@@ -251,10 +253,10 @@
 				<table class="table table-hover my-0" id="dataTable">
 					<thead>
 						<tr>
-							<th>Region</th>
-							<th class="d-none d-xl-table-cell">District</th>
-							<th class="d-none d-xl-table-cell">Market</th>
-							<th>Address</th>
+							<th class="d-none d-md-table-cell">Region</th>
+							<th class="d-none d-md-table-cell">District</th>
+							<th class="d-none d-md-table-cell">Market</th>
+							<th class="d-none d-md-table-cell">Address</th>
 							<th class="d-none d-md-table-cell">Business Hours</th>
 							<th class="d-none d-md-table-cell">Contact</th>
 							<th class="d-none d-md-table-cell">Action</th>
@@ -264,10 +266,10 @@
 						<tr>
 							<td>Project Apollo</td>
 							<td class="d-none d-xl-table-cell">01/01/2021</td>
-							<td class="d-none d-xl-table-cell">31/06/2021</td>
+							<td >31/06/2021</td>
 							<td><span class="badge bg-success">Done</span></td>
-							<td class="d-none d-md-table-cell">Vanessa Tucker</td>
-							<td class="d-none d-md-table-cell"><div class="mb-2">
+							<td >Vanessa Tucker</td>
+							<td ><div class="mb-2">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 align-middle me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
 							</div></td>
 						</tr>
@@ -276,13 +278,104 @@
 			</div>
 		</div>
 	</div>
-
 </div>
+
 </main>
+
+
+<!-- modal for confirmation of delete operation-->
+<div class="modal fade " id="confirmDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content ">
+      <div class="modal-header">
+          <h5 class="modal-title" id="confirmDeleteModalLabel">Please confirm your deletion</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <!-- <div class="input-group mb-2">
+            <span class="input-group-text col-sm-4" id="basic-addon1">Market ID</span>
+            <input type="text" class="form-control col-sm-8" aria-describedby="basic-addon1" id="modalMarketID" readonly>
+        </div> -->
+        <div class="input-group mb-2">
+            <span class="input-group-text col-sm-4" id="basic-addon1">Market Name</span>
+            <input type="text" class="form-control col-sm-8" aria-describedby="basic-addon1" id="modalName_e" style="background-color:#f8f9fa;" readonly>
+        </div>
+        <div class="input-group mb-2">
+            <span class="input-group-text col-sm-4" id="basic-addon1">街市</span>
+            <input type="text" class="form-control col-sm-8" aria-describedby="basic-addon1" id="modalName_c" style="background-color:#f8f9fa;" readonly>
+        </div>
+        <div class="input-group mb-2">
+            <span class="input-group-text col-sm-4" id="basic-addon1">Region</span>
+            <input type="text" class="form-control col-sm-8" aria-describedby="basic-addon1" id="modalRegion_e" style="background-color:#f8f9fa;" readonly>
+        </div>
+        <div class="input-group mb-2">
+            <span class="input-group-text col-sm-4" id="basic-addon1">區域</span>
+            <input type="text" class="form-control col-sm-8" aria-describedby="basic-addon1" id="modalRegion_c" style="background-color:#f8f9fa;" readonly>
+        </div>
+        <div class="input-group mb-2">
+            <span class="input-group-text col-sm-4" id="basic-addon1">District</span>
+            <input type="text" class="form-control col-sm-8" aria-describedby="basic-addon1" id="modalDistrict_e" style="background-color:#f8f9fa;" readonly>
+        </div>
+        <div class="input-group mb-2">
+            <span class="input-group-text col-sm-4" id="basic-addon1">地區</span>
+            <input type="text" class="form-control col-sm-8" aria-describedby="basic-addon1" id="modalDistrict_c" style="background-color:#f8f9fa;" readonly>
+        </div>
+        <div class="input-group mb-2">
+            <span class="input-group-text col-sm-4" id="basic-addon1">Address</span>
+            <input type="text" class="form-control col-sm-8" aria-describedby="basic-addon1" id="modalAddress_e" style="background-color:#f8f9fa;" readonly>
+        </div>
+        <div class="input-group mb-2">
+            <span class="input-group-text col-sm-4" id="basic-addon1">地址</span>
+            <input type="text" class="form-control col-sm-8" aria-describedby="basic-addon1" id="modalAddress_c" style="background-color:#f8f9fa;" readonly>
+        </div>
+        <div class="input-group mb-2">
+            <span class="input-group-text col-sm-4" id="basic-addon1">Contact 聯絡電話</span>
+            <input type="text" class="form-control col-sm-8" aria-describedby="basic-addon1" id="modalContact" style="background-color:#f8f9fa;" readonly>
+        </div>
+        
+        <div class="row mb-3">
+          <!-- <legend class="col-form-label col-sm-12 pt-0" >Tenancy Commodity</legend> -->
+          <div class="col-sm-12" id="modal_tc">
+  
+          <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="gridCheck1">
+              <label class="form-check-label" for="gridCheck1">
+              Example checkbox
+              </label>
+          </div>
+  
+          <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="gridCheck2">
+              <label class="form-check-label" for="gridCheck2">
+              Example checkbox 2
+              </label>
+          </div>
+  
+          </div>
+      </div>
+
+        <div id="map-container-google-2" class="z-depth-1-half map-container"  >
+          <!-- <iframe src="https://maps.google.com/maps?q=22.292323,114.199405&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0"
+            style="border:0" allowfullscreen></iframe> -->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnModalCancel">Cancel</button>
+            <button type="button" class="btn btn-primary" id="modalAddButton" onclick="goAdd()">Add</button>
+            <button type="button" class="btn btn-primary" id="modalUpdateButton" onclick="goUpdate()">Update</button>
+            <button type="button" class="btn btn-primary" id="modalDeleteButton" onclick="goDelete()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <footer class="footer">
 
 </footer>
+
+
 </div>
 </div>
 
@@ -314,15 +407,15 @@
 					var html = '';
 					for(item of rsArray){
 						html += '<tr>';
-						html += '<td class="d-none d-xl-table-cell">'+item['Region_e']+'</td>';
-						html += '<td class="d-none d-xl-table-cell">'+item['District_e']+'</td>';
-						html += '<td class="d-none d-xl-table-cell">'+item['Market_e']+'</td>';
-						html += '<td class="d-none d-xl-table-cell">'+item['Address_e']+'</td>';
-						html += '<td class="d-none d-xl-table-cell">'+item['Business_Hours_e']+'</td>';
-						html += '<td class="d-none d-xl-table-cell">'+item['Contact_1']+' '+item['Contact_2']+'</td>';
-						html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;"><a href="" onclick="return false;">';
+						html += '<td class="d-none d-md-table-cell">'+item['Region_e']+'</td>';
+						html += '<td class="d-none d-md-table-cell">'+item['District_e']+'</td>';
+						html += '<td class="d-none d-md-table-cell">'+item['Market_e']+'</td>';
+						html += '<td class="d-none d-md-table-cell">'+item['Address_e']+'</td>';
+						html += '<td class="d-none d-md-table-cell">'+item['Business_Hours_e']+'</td>';
+						html += '<td class="d-none d-md-table-cell">'+item['Contact_1']+' '+item['Contact_2']+'</td>';
+						html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" onclick="return false;">';
 						html += '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 align-middle me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>';
-						html += '</a></div></td>';
+						html += '</a></div></td></tr>';
 					}
 					document.getElementById('dataBody').innerHTML = html;
 					// console.log(html);
