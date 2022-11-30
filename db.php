@@ -2,7 +2,7 @@
 $server = 'localhost';
 $dbuser = 'root';
 $dbpassword = '';
-$dbname = 'atwd_chris';
+$dbname = 'atwd';
 
 $conn = new mysqli($server, $dbuser, $dbpassword, $dbname);
 if ($conn->connect_error) {
