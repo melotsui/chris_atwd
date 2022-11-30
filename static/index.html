@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="AdminKit">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+
+	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
+
+	<title>ATWD Market</title>
+
+	<link href="css/app.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+	<script>
+        var request = new XMLHttpRequest();
+        var resultArray;
+        var html;
+
+        function startSearch() {
+            var Region_e = document.getElementById("Region_e").value;
+            var url = "http://localhost/market/index.php/market/Region_e/" + Region_e;
+
+            request.open("GET", url, true);  // true=>asynchronous, false=>synchronous
+            request.onreadystatechange = updatePage;
+            request.send(null);
+        }
+
+        function startSearch() {
+            var District_e = document.getElementById("District_e").value;
+            var url = "http://localhost/market/index.php/market/District_e/" + District_e;
+
+            request.open("GET", url, true);  // true=>asynchronous, false=>synchronous
+            request.onreadystatechange = updatePage;
+            request.send(null);
+        }
+
+		function startSearch() {
+            var Market_e = document.getElementById("Market_e").value;
+            var url = "http://localhost/market/index.php/market/Market_e/" + Market_e;
+
+            request.open("GET", url, true);  // true=>asynchronous, false=>synchronous
+            request.onreadystatechange = updatePage;
+            request.send(null);
+        }
+
+		function startSearch() {
+            var Tenancy_Commodity_e = document.getElementById("Tenancy_Commodity_e").value;
+            var url = "http://localhost/market/index.php/market/Tenancy_Commodity_e/" + Tenancy_Commodity_e;
+
+            request.open("GET", url, true);  // true=>asynchronous, false=>synchronous
+            request.onreadystatechange = updatePage;
+            request.send(null);
+        }
+
+        function updatePage() {   // callback
+            if (request.readyState == 4) {
+                if (request.status == 200) {
+                    var serverData = request.responseText;
+                    var displayArea = document.getElementById('displayArea');
+                    // displayArea.innerHTML = serverData;
+                    resultArray = JSON.parse(serverData);
+                    html = '<table border=1>';
+                    html += '<tr><th>Market ID</th><th>Region e</th><th>Region c</th><th>District e</th><th>District c</th>';
+                    html += '<th>Address e</th><th>Address c</th><th>Business Hours e</th><th>Business Hours c</th><th>Coordinate</th><th>contact 1</th><th>contact 2</th>';
+					html += '<th>Tenancy Commodity e</th><th>Tenancy Commodity c</th><th>nos stall</th><tr>';
+
+                    resultArray.forEach(showRecord)
+
+                    html += '</table>';
+                    displayArea.innerHTML = html;   // Single Page Application (SPA)
+                }
+            }
+        }
+
+        function showRecord(record) {
+            html += '<tr>';
+            html += '<td>' + record['mapID'];
+            html += '<td>' + record['districtID'];
+            html += '<td>' + record['map_type'];
+            html += '<td>' + record['name_e'];
+            html += '<td>' + record['address_e'];
+            html += '<td>' + record['contact1'];
+            html += '<td>' + record['openHr_e'];
+            // html += '<td>' + '<img src="bin.jpg" width=30 onclick="javascript:test('  + "'" + record['mapID'] + "'" + ')">'
+            html += '<td>' + '<img src="bin.jpg" width=30 ';
+            html += 'data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"';
+            html += 'onclick="javascript:setConfirmDeleteModal(' + "'" + record['mapID'] + "'" + ')">';
+            html += '</tr>';
+        }
+
+        function setConfirmDeleteModal(mapID) {
+            var element = document.getElementById('modalMapID');
+            element.value = mapID;
+
+            for (item of resultArray) {
+                if (item['mapID']==mapID) {
+                    district = item['districtID'];
+                    type = item['map_type'];
+                    name = item['name_e'];
+                    break;
+                }
+            }
+            document.getElementById('modalDistrict').value = district; 
+            document.getElementById('modalType').value = type; 
+            document.getElementById('modalName').value = name; 
+
+        }
+        
+        function goDelete() {
+            var mapID = document.getElementById("modalMapID").value;
+            var url = "http://localhost/restServer/index.php/facility/" + mapID;
+
+            request.open("DELETE", url, true);  // true=>asynchronous, false=>synchronous
+            request.onreadystatechange = showDeleteResult;
+            request.send(null);
+        }
+
+        function showDeleteResult() {
+            if (request.readyState == 4) {
+                if (request.status == 200) {
+                    var serverData = request.responseText;
+                    document.getElementById("btnModalCancel").click();
+                    startSearch();
+                }
+            }
+        }
+
+        function setRegion(Region_e) {
+            var element = document.getElementById("Region_e");
+            element.value = Region_e;
+        }
+    </script>
+</head>
+
+<body>
+	<div class="wrapper">
+		<nav id="sidebar" class="sidebar js-sidebar" >
+			<div class="sidebar-content js-simplebar">
+				<a class="sidebar-brand" href="index.html">
+		  <span class="align-middle">ATWD</span>
+		</a>
+	
+		<div class="row" >
+			<div class="col-12 col-lg-12" >
+				<div class="card">
+					<div class="card-header">
+						<h5 class="card-title mb-0">Region</h5>
+					</div>
+					<div class="card-body">
+						<select class="form-select mb-3" id="Region_e">
+						<option selected>Please Select Region</option>
+						<option href="javascript:setRegion('Hong Kong & Islands');" onclick="startSearch(); return false;">Hong Kong & Islands</option>
+						<option href="javascript:setRegion('Kowloon');" onclick="startSearch(); return false;">Kowloon</option>
+						<option href="javascript:setRegion('New Territories');" onclick="startSearch(); return false;">New Territories</option>
+					</select>
+					</div>
+					<div class="card-header">
+						<h5 class="card-title mb-0">District
+					</div>
+					<div class="card-body">
+						<select class="form-select mb-3" id="District_e">
+						<option selected>Please Select District</option>
+						<option href="javascript:setDistrict('CW');">One</option>
+						<option href="javascript:setDistrict('CW');">Two</option>
+						<option href="javascript:setDistrict('CW');">Three</option>
+					</select>
+					</div>
+					<div class="card-header">
+						<h5 class="card-title mb-0">Market
+					</div>
+					<div class="card-body">
+						<select class="form-select mb-3" id="Market_e">
+						<option selected>Please Select Market</option>
+						<option>One</option>
+						<option>Two</option>
+						<option>Three</option>
+					</select>
+					</div>
+					<div class="card-header">
+						<h5 class="card-title mb-0">Commodity
+					</div>
+					<div class="card-body">
+						<select class="form-select mb-3" id="Tenancy_Commodity_e">
+						<option selected>Please Select Commodity</option>
+						<option>One</option>
+						<option>Two</option>
+						<option>Three</option>
+					</select>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	
+		</nav>
+	
+		<div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+		  <i class="hamburger align-self-center"></i>
+		</a>
+		
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+						<li class="nav-item dropdown">
+		
+						</li>
+					</ul>
+				</div>
+			</nav>
+		
+			<main class="content">
+				<div class="container-fluid p-0">
+					<h1 class="h3 mb-3"><strong>Market</strong> List</h1>
+					</div>
+
+
+	<div class="row">
+		<div class="col-12 col-lg-12 col-xxl-12	 d-flex">
+			<div class="card flex-fill" >
+				<div class="card-header">
+
+					<h5 class="card-title mb-0">Click to view details</h5>
+				</div>
+				<table class="table table-hover my-0" id="dataTable">
+					<thead>
+						<tr>
+							<th>Region</th>
+							<th class="d-none d-xl-table-cell">District</th>
+							<th class="d-none d-xl-table-cell">Market</th>
+							<th>Market ID</th>
+							<th class="d-none d-md-table-cell">Commodity</th>
+							<th class="d-none d-md-table-cell">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Project Apollo</td>
+							<td class="d-none d-xl-table-cell">01/01/2021</td>
+							<td class="d-none d-xl-table-cell">31/06/2021</td>
+							<td><span class="badge bg-success">Done</span></td>
+							<td class="d-none d-md-table-cell">Vanessa Tucker</td>
+							<td class="d-none d-md-table-cell"><div class="mb-2">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 align-middle me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+							</div></td>
+						</tr>
+						<tr>
+							<td>Project Fireball</td>
+							<td class="d-none d-xl-table-cell">01/01/2021</td>
+							<td class="d-none d-xl-table-cell">31/06/2021</td>
+							<td><span class="badge bg-danger">Cancelled</span></td>
+							<td class="d-none d-md-table-cell">William Harris</td>
+							<td class="d-none d-md-table-cell"><div class="mb-2">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 align-middle me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+							</div></td>
+						</tr>
+						<tr>
+							<td>Project Hades</td>
+							<td class="d-none d-xl-table-cell">01/01/2021</td>
+							<td class="d-none d-xl-table-cell">31/06/2021</td>
+							<td><span class="badge bg-success">Done</span></td>
+							<td class="d-none d-md-table-cell">Sharon Lessman</td>
+							<td class="d-none d-md-table-cell"><div class="mb-2">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 align-middle me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+							</div></td>
+						</tr>
+						<tr>
+							<td>Project Nitro</td>
+							<td class="d-none d-xl-table-cell">01/01/2021</td>
+							<td class="d-none d-xl-table-cell">31/06/2021</td>
+							<td><span class="badge bg-warning">In progress</span></td>
+							<td class="d-none d-md-table-cell">Vanessa Tucker</td>
+							<td class="d-none d-md-table-cell"><div class="mb-2">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 align-middle me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+							</div></td>
+						</tr>
+						<tr>
+							<td>Project Phoenix</td>
+							<td class="d-none d-xl-table-cell">01/01/2021</td>
+							<td class="d-none d-xl-table-cell">31/06/2021</td>
+							<td><span class="badge bg-success">Done</span></td>
+							<td class="d-none d-md-table-cell">William Harris</td>
+							<td class="d-none d-md-table-cell"><div class="mb-2">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 align-middle me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+							</div></td>
+						</tr>
+						<tr>
+							<td>Project X</td>
+							<td class="d-none d-xl-table-cell">01/01/2021</td>
+							<td class="d-none d-xl-table-cell">31/06/2021</td>
+							<td><span class="badge bg-success">Done</span></td>
+							<td class="d-none d-md-table-cell">Sharon Lessman</td>
+							<td class="d-none d-md-table-cell"><div class="mb-2">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 align-middle me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+							</div></td>
+						</tr>
+						<tr>
+							<td>Project Romeo</td>
+							<td class="d-none d-xl-table-cell">01/01/2021</td>
+							<td class="d-none d-xl-table-cell">31/06/2021</td>
+							<td><span class="badge bg-success">Done</span></td>
+							<td class="d-none d-md-table-cell">Christina Mason</td>
+							<td class="d-none d-md-table-cell"><div class="mb-2">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 align-middle me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+							</div></td>
+						</tr>
+						<tr>
+							<td>Project Wombat</td>
+							<td class="d-none d-xl-table-cell">01/01/2021</td>
+							<td class="d-none d-xl-table-cell">31/06/2021</td>
+							<td><span class="badge bg-warning">In progress</span></td>
+							<td class="d-none d-md-table-cell">William Harris</td>
+							<td class="d-none d-md-table-cell"><div class="mb-2">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 align-middle me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+							</div></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+</div>
+</main>
+
+<footer class="footer">
+
+</footer>
+</div>
+</div>
+
+	<script src="js/app.js"></script>
+	<script>
+		$(function(){
+			listMarket();
+		});
+		var request = new XMLHttpRequest();
+		var rsArray;
+		function listMarket(){
+			var url='http://127.0.0.1/market/index.php/market/Tenancy_Commodity_e/FISH';
+			request.open("GET", url, true);
+			request.onreadystatechange=updateTable;
+			request.send(null);
+		}
+
+		function updateTable(){
+			if(request.readyState==4){
+				if(request.status==200){
+					var serverData = request.responseText;
+					// console.log(serverData);
+					rsArray = JSON.parse(serverData);
+					console.log(rsArray);
+				}
+			}
+		}
+	</script>
+
+</body>
+
+</html>
