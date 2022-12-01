@@ -29,6 +29,28 @@ class MarketService {
                 exit;
             }
         }
+        if($apiType==='all') { // 127.0.0.1/market/index.php/market/all
+            $output = array();
+            $sql = "SELECT DISTINCT Market_e, Region_e, District_e, Address_e, Business_Hours_e, Contact_1, Contact_2 FROM market m ";
+            try {
+                $dbresult = $conn->query($sql);
+                // successfully retrieved the records
+                $output = array();
+                while ($row = $dbresult->fetch_assoc()) {
+                    $output[] = $row;
+                }
+                echo json_encode($output, JSON_UNESCAPED_UNICODE);
+                exit;
+            } 
+            catch (Exception $e) {
+                $output = array();
+                $output['status'] = 'error';
+                $output['code'] = '1000';
+                $output['message'] = 'SQL execution failure';
+                echo json_encode($output, JSON_UNESCAPED_UNICODE);
+                exit;
+            }
+        }
         if($apiType==='field') { 
             $field = array_shift($parameters);
             if($field == 'region'){ // 127.0.0.1/market/index.php/market/field/region/Kowloon
