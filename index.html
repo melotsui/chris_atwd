@@ -29,8 +29,11 @@
         var requestField = new XMLHttpRequest();
         var resultArray;
         var html;
+		var filteredMarket = [];
+
 		// Search By Region
         function clickRegion() {
+			document.getElementById('Tenancy_Commodity_e')[0].selected = "selected";
 			console.log('clickRegion');
             var Region_e = document.getElementById("Region_e").value;
 			console.log('clickRegion: ' + Region_e);
@@ -57,18 +60,22 @@
                     var serverData = requestMarket.responseText;
                     // displayArea.innerHTML = serverData;
                     var resultArray = JSON.parse(serverData);
+					filteredMarket = resultArray;
 					var html = '';
+					var idx = 1;
 					for(item of resultArray){
 						html += '<tr>';
+						html += '<td class="d-none d-md-table-cell">'+idx+'</td>';
 						html += '<td class="d-none d-md-table-cell">'+item['Region_e']+'</td>';
 						html += '<td class="d-none d-md-table-cell">'+item['District_e']+'</td>';
 						html += '<td class="d-none d-md-table-cell">'+item['Market_e']+'</td>';
 						html += '<td class="d-none d-md-table-cell">'+item['Address_e']+'</td>';
 						html += '<td class="d-none d-md-table-cell">'+item['Business_Hours_e']+'</td>';
 						html += '<td class="d-none d-md-table-cell">'+item['Contact_1']+' '+item['Contact_2']+'</td>';
-						html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" onclick="return false;">';
-						html += '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 align-middle me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>';
+						html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" onclick="clickEditIcon('+"'"+item['Market_e']+"'"+');return false;">';
+						html += '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>';
 						html += '</a></div></td></tr>';
+						idx++;
 					}
 					document.getElementById('dataBody').innerHTML = html;
                 }
@@ -111,9 +118,14 @@
 		// Search By District
 
         function clickDistrict() {
+			document.getElementById('Tenancy_Commodity_e')[0].selected = "selected";
 			console.log('clickRegion');
             var District_e = document.getElementById("District_e").value;
-			console.log(Region_e);
+			if(District_e == ''){
+				clickRegion();
+				return;
+			}
+			console.log('returnreturnreturnreturn' + Region_e);
             var url = path+"/market/index.php/market/District_e/" + District_e;
 
 
@@ -130,9 +142,12 @@
                     var serverData = requestMarket.responseText;
                     // displayArea.innerHTML = serverData;
                     resultArray = JSON.parse(serverData);
+					filteredMarket = resultArray;
 					var html = '';
+					var idx = 1;
 					for(item of resultArray){
 						html += '<tr>';
+						html += '<td class="d-none d-md-table-cell">'+idx+'</td>';
 						html += '<td class="d-none d-md-table-cell">'+item['Region_e']+'</td>';
 						html += '<td class="d-none d-md-table-cell">'+item['District_e']+'</td>';
 						html += '<td class="d-none d-md-table-cell">'+item['Market_e']+'</td>';
@@ -140,9 +155,10 @@
 						html += '<td class="d-none d-md-table-cell">'+item['Business_Hours_e']+'</td>';
 						html += '<td class="d-none d-md-table-cell">'+item['Contact_1']+' '+item['Contact_2']+'</td>';
 						html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;">';
-						html += '<a href="" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" onclick="clickDeleteIcon('+"'"+item['Market_e']+"'"+');return false;">';
-						html += '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 align-middle me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>';
+						html += '<a href="" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" onclick="clickEditIcon('+"'"+item['Market_e']+"'"+');return false;">';
+						html += '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>';
 						html += '</a></div></td></tr>';
+						idx++;
 					}
 					document.getElementById('dataBody').innerHTML = html;
                 }
@@ -154,16 +170,122 @@
 
 		// Search By TC
 		function clickTC(){
+			var tcSearch = document.getElementById('Tenancy_Commodity_e').value;
+			var url = path + '/market/index.php/market/filter/tc/' + tcSearch;
+            requestMarket.open("GET", url, true);  // true=>asynchronous, false=>synchronous
+            requestMarket.onreadystatechange = updateMarketByTC;
+            requestMarket.send(null);
+		}
 
+		function updateMarketByTC(){
+			if (requestMarket.readyState == 4) {
+				if (requestMarket.status == 200) {
+					console.log(requestMarket.status);
+					var serverData = requestMarket.responseText;
+					// displayArea.innerHTML = serverData;
+					var rs = JSON.parse(serverData);
+					var html = '';
+					var idx = 1;
+					console.log(rs.length +' <=> '+ filteredMarket.length);
+					for(rsItem of rs){
+						for(item of filteredMarket){
+							if(item['Market_e'] == rsItem['Market_e']){
+								html += '<tr>';
+								html += '<td class="d-none d-md-table-cell">'+idx+'</td>';
+								html += '<td class="d-none d-md-table-cell">'+item['Region_e']+'</td>';
+								html += '<td class="d-none d-md-table-cell">'+item['District_e']+'</td>';
+								html += '<td class="d-none d-md-table-cell">'+item['Market_e']+'</td>';
+								html += '<td class="d-none d-md-table-cell">'+item['Address_e']+'</td>';
+								html += '<td class="d-none d-md-table-cell">'+item['Business_Hours_e']+'</td>';
+								html += '<td class="d-none d-md-table-cell">'+item['Contact_1']+' '+item['Contact_2']+'</td>';
+								html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;">';
+								html += '<a href="" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" onclick="clickEditIcon('+"'"+item['Market_e']+"'"+');return false;">';
+								html += '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>';
+								html += '</a></div></td></tr>';
+								idx++;
+							}
+						}
+					}
+					// filteredMarket = rs;
+					document.getElementById('dataBody').innerHTML = html;
+				}
+			}
 		}
 
 		// End Search By TC
 
 		// Delete Icon
-		function clickDeleteIcon(market_e){
+		var reqModalTC = new XMLHttpRequest();
+		function clickEditIcon(market_e){
 
+			getMarketDetail(market_e);
+			var url = path + '/market/index.php/market/tc/market_e/' + market_e;
+            reqModalTC.open("GET", url, true);  // true=>asynchronous, false=>synchronous
+            reqModalTC.onreadystatechange = updateModalTCTable;
+            reqModalTC.send(null);
+		}
+
+		function getMarketDetail(market_e){
+			for(item of allMarketList){
+				if(market_e == item['Market_e']){
+					document.getElementById('modalName_e').value = item['Market_e'];
+					document.getElementById('modalName_c').value = item['Market_c'];
+					document.getElementById('modalRegion_e').value = item['Region_e'];
+					document.getElementById('modalRegion_c').value = item['Region_c'];
+					document.getElementById('modalDistrict_e').value = item['District_e'];
+					document.getElementById('modalDistrict_c').value = item['District_c'];
+					document.getElementById('modalAddress_e').value = item['Address_e'];
+					document.getElementById('modalAddress_c').value = item['Address_c'];
+					document.getElementById('modalBH_e').value = item['Business_Hours_e'];
+					document.getElementById('modalBH_c').value = item['Business_Hours_c'];
+					document.getElementById('modalCoordinate').value = item['Coordinate'];
+					document.getElementById('google-map-iframe').src = 'https://maps.google.com/maps?q='+document.getElementById('modalCoordinate').value+'&t=&z=13&ie=UTF8&iwloc=&output=embed';
+					document.getElementById('modalContact_1').value = item['Contact_1'];
+					document.getElementById('modalContact_2').value = item['Contact_2'];
+				}
+			}
+		}
+
+		function updateModalTCTable(){
+			if (reqModalTC.readyState == 4) {
+				if (reqModalTC.status == 200) {
+					console.log(reqModalTC.status);
+					var serverData = reqModalTC.responseText;
+					// displayArea.innerHTML = serverData;
+					var rs = JSON.parse(serverData);
+					var modalTbBody = '';
+					for(item of rs){
+						modalTbBody += '<tr>';
+						modalTbBody += '<td><label class="form-check-label" for="modalCheckBoxTC_e">'+item['Tenancy_Commodity_e']+'</label></td>'
+						modalTbBody += '<td><label class="form-check-label" for="modalCheckBoxTC_c">'+item['Tenancy_Commodity_c']+'</label></td>';
+						modalTbBody += '<td><label class="form-check-label" for="modalNosStall">'+item['nos_stall']+'</label></td>'
+						modalTbBody += '</tr>';
+					}
+					document.getElementById('modalTbBody').innerHTML = modalTbBody;
+				}
+			}
 		}
 		// End Delete Icon
+
+		// Modal Icon
+		function clickModalEditIcon(){
+			document.getElementById('modalName_e').readOnly = false;
+			document.getElementById('modalName_c').readOnly = false;
+			// document.getElementById('modalRegion_e').value = item['Region_e'];
+			// document.getElementById('modalRegion_c').value = item['Region_c'];
+			// document.getElementById('modalDistrict_e').value = item['District_e'];
+			// document.getElementById('modalDistrict_c').value = item['District_c'];
+			document.getElementById('modalAddress_e').readOnly = false;
+			document.getElementById('modalAddress_c').readOnly = false;
+			document.getElementById('modalBH_e').readOnly = false;
+			document.getElementById('modalBH_c').readOnly = false;
+			document.getElementById('map-container-google-2').style.display = 'none';
+			document.getElementById('modalDivCoordinate').style.display = 'block';
+			document.getElementById('modalCoordinate').readOnly = false;
+			document.getElementById('modalContact_1').readOnly = false;
+			document.getElementById('modalContact_2').readOnly = false;
+			
+		}
     </script>
 </head>
 
@@ -260,6 +382,7 @@
 				<table class="table table-hover my-0" id="dataTable">
 					<thead>
 						<tr>
+							<th class="d-none d-md-table-cell">#</th>
 							<th class="d-none d-md-table-cell">Region</th>
 							<th class="d-none d-md-table-cell">District</th>
 							<th class="d-none d-md-table-cell">Market</th>
@@ -278,7 +401,7 @@
 							<td >Vanessa Tucker</td>
 							<td >
 								<div class="mb-2">
-									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 align-middle me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
 								</div>
 							</td>
 						</tr>
@@ -298,7 +421,11 @@ aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" style="width:100%;">
     <div class="modal-content ">
       <div class="modal-header">
-          <h5 class="modal-title" id="confirmDeleteModalLabel">Please confirm your deletion</h5>
+          <h5 class="modal-title" id="confirmDeleteModalLabel">Market Detail 
+			<a id="modalEditIcon" href="" onclick="clickModalEditIcon();return false;">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+			</a>
+		  </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
@@ -320,19 +447,27 @@ aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
 					</div>
 					<div class="col-12">
 					<label for="modalRegion_e" class="form-label">Region</label>
-					<input type="password" class="form-control" id="modalRegion_e" readonly>
+					<input type="text" class="form-control" id="modalRegion_e" readonly>
+					</div>
+					<div class="col-12">
+					<label for="modalRegion_e" class="form-label">District</label>
+					<input type="text" class="form-control" id="modalDistrict_e" readonly>
 					</div>
 					<div class="col-12">
 					<label for="modalAddress_e" class="form-label">Address</label>
-					<input type="password" class="form-control" id="modalAddress_e" readonly>
+					<input type="text" class="form-control" id="modalAddress_e" readonly>
 					</div>
 					<div class="col-12">
 					<label for="modalAddress_e" class="form-label">Business Hours</label>
-					<input type="password" class="form-control" id="modalAddress_e" readonly>
+					<input type="text" class="form-control" id="modalBH_e" readonly>
 					</div>
 					<div class="col-12">
 					<label for="modalContact_1" class="form-label">Contact 聯絡電話 1</label>
-					<input type="password" class="form-control" id="modalContact_1" readonly>
+					<input type="text" class="form-control" id="modalContact_1" readonly>
+					</div>
+					<div class="col-12" style="display:none;" id="modalDivCoordinate">
+					<label for="modalContact_2" class="form-label">Coordinate</label>
+					<input type="text" class="form-control" id="modalCoordinate" readonly>
 					</div>
 				</div>
 				
@@ -346,11 +481,15 @@ aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
 				<div class="row g-3">
 					<div class="col-12">
 						<label for="modalName_c" class="form-label">街市</label>
-						<input type="email" class="form-control" id="modalName_c" readonly>
+						<input type="text" class="form-control" id="modalName_c" readonly>
 					</div>
 					<div class="col-12">
 						<label for="modalRegion_c" class="form-label">區域</label>
 						<input type="text" class="form-control" id="modalRegion_c" readonly>
+					</div>
+					<div class="col-12">
+					<label for="modalRegion_e" class="form-label">地區</label>
+					<input type="text" class="form-control" id="modalDistrict_c" readonly>
 					</div>
 					<div class="col-12">
 						<label for="modalAddress_c" class="form-label">地址</label>
@@ -362,14 +501,14 @@ aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
 					</div>
 					<div class="col-12">
 					<label for="modalContact_2" class="form-label">Contact 聯絡電話 2</label>
-					<input type="password" class="form-control" id="modalContact_2" readonly>
+					<input type="text" class="form-control" id="modalContact_2" readonly>
 					</div>
 				</div>  
 			</div> <!-- End col-lg-6 -->
 			<div class="col-12">
 				<div id="map-container-google-2" class="z-depth-1-half map-container" style="height:100%;">
 					<iframe src="https://maps.google.com/maps?q=22.292323,114.199405&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0"
-						style="border:0;height:auto;width:100%;" allowfullscreen ></iframe>
+						style="border:0;height:auto;width:100%;" id="google-map-iframe" allowfullscreen ></iframe>
 				</div>   
 			</div>
 			<div class="col-12" id="modal_tc">
@@ -381,7 +520,7 @@ aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
 						<th scope="col"></th>
 						<th scope="col">Nos Stall</th>
 					</thead>
-					<tbody>
+					<tbody id="modalTbBody">
 						<tr>
 							<!-- <td><input class="form-check-input" type="checkbox" id="modalCheckBoxTC_e" value="'+rs['Data']['Tenancy_Commodity'][i]['Tenancy_Commodity_e']+'" checked></td> -->
 							<td><label class="form-check-label" for="modalCheckBoxTC_e">modal CheckBox TC_e</label></td>
@@ -449,25 +588,30 @@ aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
 			request.onreadystatechange=updateTable;
 			request.send(null);
 		}
-
+		var allMarketList = [];
 		function updateTable(){
 			if(request.readyState==4){
 				if(request.status==200){
 					var serverData = request.responseText;
 					// console.log(serverData);
 					rsArray = JSON.parse(serverData);
+					allMarketList = rsArray;
+					filteredMarket = allMarketList;
 					var html = '';
+					var idx = 1;
 					for(item of rsArray){
 						html += '<tr>';
+						html += '<td class="d-none d-md-table-cell">'+idx+'</td>';
 						html += '<td class="d-none d-md-table-cell">'+item['Region_e']+'</td>';
 						html += '<td class="d-none d-md-table-cell">'+item['District_e']+'</td>';
 						html += '<td class="d-none d-md-table-cell">'+item['Market_e']+'</td>';
 						html += '<td class="d-none d-md-table-cell">'+item['Address_e']+'</td>';
 						html += '<td class="d-none d-md-table-cell">'+item['Business_Hours_e']+'</td>';
 						html += '<td class="d-none d-md-table-cell">'+item['Contact_1']+' '+item['Contact_2']+'</td>';
-						html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" onclick="clickDeleteIcon('+"'"+item['Market_e']+"'"+');return false;">';
-						html += '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 align-middle me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>';
+						html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" onclick="clickEditIcon('+"'"+item['Market_e']+"'"+');return false;">';
+						html += '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>';
 						html += '</a></div></td></tr>';
+						idx++;
 					}
 					document.getElementById('dataBody').innerHTML = html;
 					// console.log(html);

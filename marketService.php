@@ -9,29 +9,7 @@ class MarketService {
         $apiType = array_shift($parameters);
         if($apiType==='all') { // 127.0.0.1/market/index.php/market/all
             $output = array();
-            $sql = "SELECT DISTINCT Market_e, Region_e, District_e, Address_e, Business_Hours_e, Contact_1, Contact_2 FROM market m ";
-            try {
-                $dbresult = $conn->query($sql);
-                // successfully retrieved the records
-                $output = array();
-                while ($row = $dbresult->fetch_assoc()) {
-                    $output[] = $row;
-                }
-                echo json_encode($output, JSON_UNESCAPED_UNICODE);
-                exit;
-            } 
-            catch (Exception $e) {
-                $output = array();
-                $output['status'] = 'error';
-                $output['code'] = '1000';
-                $output['message'] = 'SQL execution failure';
-                echo json_encode($output, JSON_UNESCAPED_UNICODE);
-                exit;
-            }
-        }
-        if($apiType==='all') { // 127.0.0.1/market/index.php/market/all
-            $output = array();
-            $sql = "SELECT DISTINCT Market_e, Region_e, District_e, Address_e, Business_Hours_e, Contact_1, Contact_2 FROM market m ";
+            $sql = "SELECT DISTINCT Market_e, Market_c, Region_e, Region_c, District_e, District_c, Address_e, Address_c, Business_Hours_e, Business_Hours_c, Coordinate, Contact_1, Contact_2 FROM market m ";
             try {
                 $dbresult = $conn->query($sql);
                 // successfully retrieved the records
@@ -116,13 +94,82 @@ class MarketService {
                 catch (Exception $e) {
                     $output = array();
                     $output['status'] = 'error';
-                    $output['code'] = '1000';
+                    $output['code'] = '999';
                     $output['message'] = "Region $region does not exist" ;
                     echo json_encode($output, JSON_UNESCAPED_UNICODE);
                     exit;
                 }
             }
         }
+        if($apiType==='tc') { // 127.0.0.1/market/index.php/market/tc/market_e/NORTH POINT MARKET
+            array_shift($parameters);
+            $name = array_shift($parameters);
+            if(!isset($name)){
+                $output = array();
+                $output['status'] = 'error';
+                $output['code'] = '999';
+                $output['message'] = "Invalid Market Name" ;
+                echo json_encode($output, JSON_UNESCAPED_UNICODE);
+                exit;
+            }
+            $output = array();
+            $sql = "SELECT DISTINCT Tenancy_Commodity_e, Tenancy_Commodity_c, nos_stall 
+                        FROM market m WHERE Market_e = '$name';";
+            try {
+                $dbresult = $conn->query($sql);
+                // successfully retrieved the records
+                $output = array();
+                while ($row = $dbresult->fetch_assoc()) {
+                    $output[] = $row;
+                }
+                echo json_encode($output, JSON_UNESCAPED_UNICODE);
+                exit;
+            } 
+            catch (Exception $e) {
+                $output = array();
+                $output['status'] = 'error';
+                $output['code'] = '1000';
+                $output['message'] = "SQL execution failure" ;
+                echo json_encode($output, JSON_UNESCAPED_UNICODE);
+                exit;
+            }
+        }
+        
+        if ($apiType==='filter') { // 127.0.0.1/market/index.php/market/filter/tc/{tc}
+            // search records by Region
+            array_shift($parameters);
+            $tc = array_shift($parameters);
+            // if (!isset($Region_e)|($Region_e=="")) {
+            //     $output = array();
+            //     $output['status'] = 'error';
+            //     $output['code'] = '1001';
+            //     $output['message'] = 'Missing Region';
+            //     echo json_encode($output, JSON_UNESCAPED_UNICODE);
+            //     exit;
+            // }
+            $sql = "SELECT DISTINCT Market_e, Region_e, District_e, Address_e, Business_Hours_e, Contact_1, Contact_2 
+                    FROM market WHERE Tenancy_Commodity_e LIKE '%$tc%'";
+            try {
+                $dbresult = $conn->query($sql);
+                // successfully retrieved the records
+                $output = array();
+                while ($row = $dbresult->fetch_assoc()) {
+                    $output[] = $row;
+                }
+                echo json_encode($output, JSON_UNESCAPED_UNICODE);
+                exit;
+            } 
+            catch (Exception $e) {
+                $output = array();
+                $output['status'] = 'error';
+                $output['code'] = '1000';
+                $output['message'] = 'SQL execution failure';
+                echo json_encode($output, JSON_UNESCAPED_UNICODE);
+                exit;
+            }
+
+        }
+
         if ($apiType==='Region_e') { // 127.0.0.1/market/index.php/market/Region_e/Kowloon
             // search records by Region
             $Region_e = array_shift($parameters);
@@ -154,7 +201,7 @@ class MarketService {
                 exit;
             }
 
-        } elseif ($apiType==='District_e') { // 127.0.0.1/market/index.php/market/District_e/Kwun Tong
+        } elseif ($apiType==='District_e') { // 127.0.0.1/market/index.php/market/District_e/{district_e}
            $District_e = array_shift($parameters);
         //    if (!isset($District_e)|($District_e=="")) {
         //        $output = array();
