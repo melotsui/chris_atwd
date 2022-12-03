@@ -324,27 +324,27 @@ class MarketService {
 
     }
 
-    function DELETE($mID) {
+    function DELETE($market_e) {
         //alert("DELETE function");
-        $mID = array_shift($mID);
-        if (!isset($mID)) {
+        $market_e = array_shift($market_e);
+        if (!isset($market_e)) {
             http_response_code(400);
             $output = array();
             $output['status'] = 'error';
             $output['code'] = '5000';
-            $output['message'] = 'Delete Function: Market ID Not found';
+            $output['message'] = 'Delete Function: Market Not found';
             echo json_encode($output, JSON_UNESCAPED_UNICODE);
             exit;
         }
         
         require_once 'db.php';
-        $sql = "DELETE FROM market WHERE mID=$mID";
+        $sql = "DELETE FROM market WHERE market_e='$market_e'";
 
         try {
             $dbresult = $conn->query($sql);
             $output = array();
             $output['status'] = 'success';
-            $output['message'] = "Market ID $mID successfully deleted";
+            $output['message'] = "Market $market_e successfully deleted";
             echo json_encode($output, JSON_UNESCAPED_UNICODE);
             exit;
         } 

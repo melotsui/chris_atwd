@@ -8,8 +8,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
 	<meta name="author" content="AdminKit">
-	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	<meta name="keywords"
+		content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
 
 	<link rel="preconnect" href="https://fonts.gstatic.com">
@@ -24,160 +26,160 @@
 
 	<script type="text/javascript">
 
-        var request = new XMLHttpRequest();
-        var requestMarket = new XMLHttpRequest();
-        var requestField = new XMLHttpRequest();
-        var resultArray;
-        var html;
+		var request = new XMLHttpRequest();
+		var requestMarket = new XMLHttpRequest();
+		var requestField = new XMLHttpRequest();
+		var resultArray;
+		var html;
 		var filteredMarket = [];
 
 		// Search By Region
-        function clickRegion() {
+		function clickRegion() {
 			document.getElementById('Tenancy_Commodity_e')[0].selected = "selected";
 			console.log('clickRegion');
-            var Region_e = document.getElementById("Region_e").value;
+			var Region_e = document.getElementById("Region_e").value;
 			console.log('clickRegion: ' + Region_e);
-            var url = path+"/market/index.php/market/Region_e/" + Region_e;
+			var url = path + "/market/index.php/market/Region_e/" + Region_e;
 
-			if(Region_e == ''){
+			if (Region_e == '') {
 				document.getElementById('headerDistrict').style.display = "none";
 				document.getElementById('bodyDistrict').style.display = "none";
-			}else{
+			} else {
 				document.getElementById('headerDistrict').style.display = "block";
 				document.getElementById('bodyDistrict').style.display = "block";
 			}
 
-            requestMarket.open("GET", url, true);  // true=>asynchronous, false=>synchronous
-            requestMarket.onreadystatechange = updateMarketByRegion;
-            requestMarket.send(null);
+			requestMarket.open("GET", url, true);  // true=>asynchronous, false=>synchronous
+			requestMarket.onreadystatechange = updateMarketByRegion;
+			requestMarket.send(null);
 
-        }
+		}
 
 		function updateMarketByRegion() {   // callback
-            if (requestMarket.readyState == 4) {
-                if (requestMarket.status == 200) {
+			if (requestMarket.readyState == 4) {
+				if (requestMarket.status == 200) {
 					console.log('updateMarketByRegion' + request.status);
-                    var serverData = requestMarket.responseText;
-                    // displayArea.innerHTML = serverData;
-                    var resultArray = JSON.parse(serverData);
+					var serverData = requestMarket.responseText;
+					// displayArea.innerHTML = serverData;
+					var resultArray = JSON.parse(serverData);
 					filteredMarket = resultArray;
 					var html = '';
 					var idx = 1;
-					for(item of resultArray){
+					for (item of resultArray) {
 						html += '<tr>';
-						html += '<td class="d-none d-md-table-cell">'+idx+'</td>';
-						html += '<td class="d-none d-md-table-cell">'+item['Region_e']+'</td>';
-						html += '<td class="d-none d-md-table-cell">'+item['District_e']+'</td>';
-						html += '<td class="d-none d-md-table-cell">'+item['Market_e']+'</td>';
-						html += '<td class="d-none d-md-table-cell">'+item['Address_e']+'</td>';
-						html += '<td class="d-none d-md-table-cell">'+item['Business_Hours_e']+'</td>';
-						html += '<td class="d-none d-md-table-cell">'+item['Contact_1']+' '+item['Contact_2']+'</td>';
-						html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" onclick="clickEditIcon('+"'"+item['Market_e']+"'"+');return false;">';
+						html += '<td class="d-none d-md-table-cell">' + idx + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['Region_e'] + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['District_e'] + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['Market_e'] + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['Address_e'] + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['Business_Hours_e'] + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['Contact_1'] + ' ' + item['Contact_2'] + '</td>';
+						html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;"><a href="" data-bs-toggle="modal" data-bs-target="#editModal" onclick="changeModalMode(' + "'view'" + ');clickEditIcon(' + "'" + item['Market_e'] + "'" + ');return false;">';
 						html += '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>';
 						html += '</a></div></td></tr>';
 						idx++;
 					}
 					document.getElementById('dataBody').innerHTML = html;
-                }
-				
-            }
-        }
+				}
 
-		function changeDistrict(){
+			}
+		}
+
+		function changeDistrict() {
 			console.log('changeDistrict');
-            var Region_e = document.getElementById("Region_e").value;
+			var Region_e = document.getElementById("Region_e").value;
 			console.log(Region_e);
-            var url = path+"/market/index.php/market/field/region/" + Region_e;
+			var url = path + "/market/index.php/market/field/region/" + Region_e;
 
 
-            requestField.open("GET", url, true);  // true=>asynchronous, false=>synchronous
-            requestField.onreadystatechange = updateDistrictByRegion;
-            requestField.send(null);
+			requestField.open("GET", url, true);  // true=>asynchronous, false=>synchronous
+			requestField.onreadystatechange = updateDistrictByRegion;
+			requestField.send(null);
 		}
 
 		function updateDistrictByRegion() {   // callback
-            if (requestField.readyState == 4) {
-                if (requestField.status == 200) {
+			if (requestField.readyState == 4) {
+				if (requestField.status == 200) {
 					console.log(requestField.status);
-                    var serverData = requestField.responseText;
-                    // displayArea.innerHTML = serverData;
-                    var resultArray = JSON.parse(serverData);
+					var serverData = requestField.responseText;
+					// displayArea.innerHTML = serverData;
+					var resultArray = JSON.parse(serverData);
 					var html = '<option value="" selected>Please Select District</option>';
-					for(item of resultArray){
-						html += '<option value="'+item['District_e']+'">';
-						html +=	item['District_e'];
-						html +=	'</option>';
+					for (item of resultArray) {
+						html += '<option value="' + item['District_e'] + '">';
+						html += item['District_e'];
+						html += '</option>';
 					}
 					document.getElementById('District_e').innerHTML = html;
-                }
-				
-            }
-        }
+				}
+
+			}
+		}
 		// End Search By Region
 
 		// Search By District
 
-        function clickDistrict() {
+		function clickDistrict() {
 			document.getElementById('Tenancy_Commodity_e')[0].selected = "selected";
 			console.log('clickRegion');
-            var District_e = document.getElementById("District_e").value;
-			if(District_e == ''){
+			var District_e = document.getElementById("District_e").value;
+			if (District_e == '') {
 				clickRegion();
 				return;
 			}
 			console.log('returnreturnreturnreturn' + Region_e);
-            var url = path+"/market/index.php/market/District_e/" + District_e;
+			var url = path + "/market/index.php/market/District_e/" + District_e;
 
 
-            requestMarket.open("GET", url, true);  // true=>asynchronous, false=>synchronous
-            requestMarket.onreadystatechange = updateMarketByRegion;
-            requestMarket.send(null);
+			requestMarket.open("GET", url, true);  // true=>asynchronous, false=>synchronous
+			requestMarket.onreadystatechange = updateMarketByRegion;
+			requestMarket.send(null);
 
-        }
+		}
 
 		function updateMarketByDistrict() {   // callback
-            if (requestMarket.readyState == 4) {
-                if (requestMarket.status == 200) {
+			if (requestMarket.readyState == 4) {
+				if (requestMarket.status == 200) {
 					console.log(requestMarket.status);
-                    var serverData = requestMarket.responseText;
-                    // displayArea.innerHTML = serverData;
-                    resultArray = JSON.parse(serverData);
+					var serverData = requestMarket.responseText;
+					// displayArea.innerHTML = serverData;
+					resultArray = JSON.parse(serverData);
 					filteredMarket = resultArray;
 					var html = '';
 					var idx = 1;
-					for(item of resultArray){
+					for (item of resultArray) {
 						html += '<tr>';
-						html += '<td class="d-none d-md-table-cell">'+idx+'</td>';
-						html += '<td class="d-none d-md-table-cell">'+item['Region_e']+'</td>';
-						html += '<td class="d-none d-md-table-cell">'+item['District_e']+'</td>';
-						html += '<td class="d-none d-md-table-cell">'+item['Market_e']+'</td>';
-						html += '<td class="d-none d-md-table-cell">'+item['Address_e']+'</td>';
-						html += '<td class="d-none d-md-table-cell">'+item['Business_Hours_e']+'</td>';
-						html += '<td class="d-none d-md-table-cell">'+item['Contact_1']+' '+item['Contact_2']+'</td>';
+						html += '<td class="d-none d-md-table-cell">' + idx + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['Region_e'] + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['District_e'] + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['Market_e'] + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['Address_e'] + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['Business_Hours_e'] + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['Contact_1'] + ' ' + item['Contact_2'] + '</td>';
 						html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;">';
-						html += '<a href="" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" onclick="clickEditIcon('+"'"+item['Market_e']+"'"+');return false;">';
+						html += '<a href="" data-bs-toggle="modal" data-bs-target="#editModal" onclick="changeModalMode(' + "'view'" + ');clickEditIcon(' + "'" + item['Market_e'] + "'" + ');return false;">';
 						html += '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>';
 						html += '</a></div></td></tr>';
 						idx++;
 					}
 					document.getElementById('dataBody').innerHTML = html;
-                }
-				
-            }
-        }
+				}
+
+			}
+		}
 
 		// End Search By District
 
 		// Search By TC
-		function clickTC(){
+		function clickTC() {
 			var tcSearch = document.getElementById('Tenancy_Commodity_e').value;
 			var url = path + '/market/index.php/market/filter/tc/' + tcSearch;
-            requestMarket.open("GET", url, true);  // true=>asynchronous, false=>synchronous
-            requestMarket.onreadystatechange = updateMarketByTC;
-            requestMarket.send(null);
+			requestMarket.open("GET", url, true);  // true=>asynchronous, false=>synchronous
+			requestMarket.onreadystatechange = updateMarketByTC;
+			requestMarket.send(null);
 		}
 
-		function updateMarketByTC(){
+		function updateMarketByTC() {
 			if (requestMarket.readyState == 4) {
 				if (requestMarket.status == 200) {
 					console.log(requestMarket.status);
@@ -186,20 +188,20 @@
 					var rs = JSON.parse(serverData);
 					var html = '';
 					var idx = 1;
-					console.log(rs.length +' <=> '+ filteredMarket.length);
-					for(rsItem of rs){
-						for(item of filteredMarket){
-							if(item['Market_e'] == rsItem['Market_e']){
+					console.log(rs.length + ' <=> ' + filteredMarket.length);
+					for (rsItem of rs) {
+						for (item of filteredMarket) {
+							if (item['Market_e'] == rsItem['Market_e']) {
 								html += '<tr>';
-								html += '<td class="d-none d-md-table-cell">'+idx+'</td>';
-								html += '<td class="d-none d-md-table-cell">'+item['Region_e']+'</td>';
-								html += '<td class="d-none d-md-table-cell">'+item['District_e']+'</td>';
-								html += '<td class="d-none d-md-table-cell">'+item['Market_e']+'</td>';
-								html += '<td class="d-none d-md-table-cell">'+item['Address_e']+'</td>';
-								html += '<td class="d-none d-md-table-cell">'+item['Business_Hours_e']+'</td>';
-								html += '<td class="d-none d-md-table-cell">'+item['Contact_1']+' '+item['Contact_2']+'</td>';
+								html += '<td class="d-none d-md-table-cell">' + idx + '</td>';
+								html += '<td class="d-none d-md-table-cell">' + item['Region_e'] + '</td>';
+								html += '<td class="d-none d-md-table-cell">' + item['District_e'] + '</td>';
+								html += '<td class="d-none d-md-table-cell">' + item['Market_e'] + '</td>';
+								html += '<td class="d-none d-md-table-cell">' + item['Address_e'] + '</td>';
+								html += '<td class="d-none d-md-table-cell">' + item['Business_Hours_e'] + '</td>';
+								html += '<td class="d-none d-md-table-cell">' + item['Contact_1'] + ' ' + item['Contact_2'] + '</td>';
 								html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;">';
-								html += '<a href="" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" onclick="clickEditIcon('+"'"+item['Market_e']+"'"+');return false;">';
+								html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;"><a href="" data-bs-toggle="modal" data-bs-target="#editModal" onclick="changeModalMode(' + "'view'" + ');clickEditIcon(' + "'" + item['Market_e'] + "'" + ');return false;">';
 								html += '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>';
 								html += '</a></div></td></tr>';
 								idx++;
@@ -216,18 +218,18 @@
 
 		// Delete Icon
 		var reqModalTC = new XMLHttpRequest();
-		function clickEditIcon(market_e){
+		function clickEditIcon(market_e) {
 
 			getMarketDetail(market_e);
 			var url = path + '/market/index.php/market/tc/market_e/' + market_e;
-            reqModalTC.open("GET", url, true);  // true=>asynchronous, false=>synchronous
-            reqModalTC.onreadystatechange = updateModalTCTable;
-            reqModalTC.send(null);
+			reqModalTC.open("GET", url, true);  // true=>asynchronous, false=>synchronous
+			reqModalTC.onreadystatechange = updateModalTCTable;
+			reqModalTC.send(null);
 		}
 
-		function getMarketDetail(market_e){
-			for(item of allMarketList){
-				if(market_e == item['Market_e']){
+		function getMarketDetail(market_e) {
+			for (item of allMarketList) {
+				if (market_e == item['Market_e']) {
 					document.getElementById('modalName_e').value = item['Market_e'];
 					document.getElementById('modalName_c').value = item['Market_c'];
 					document.getElementById('modalRegion_e').value = item['Region_e'];
@@ -239,14 +241,14 @@
 					document.getElementById('modalBH_e').value = item['Business_Hours_e'];
 					document.getElementById('modalBH_c').value = item['Business_Hours_c'];
 					document.getElementById('modalCoordinate').value = item['Coordinate'];
-					document.getElementById('google-map-iframe').src = 'https://maps.google.com/maps?q='+document.getElementById('modalCoordinate').value+'&t=&z=13&ie=UTF8&iwloc=&output=embed';
+					document.getElementById('google-map-iframe').src = 'https://maps.google.com/maps?q=' + document.getElementById('modalCoordinate').value + '&t=&z=13&ie=UTF8&iwloc=&output=embed';
 					document.getElementById('modalContact_1').value = item['Contact_1'];
 					document.getElementById('modalContact_2').value = item['Contact_2'];
 				}
 			}
 		}
 
-		function updateModalTCTable(){
+		function updateModalTCTable() {
 			if (reqModalTC.readyState == 4) {
 				if (reqModalTC.status == 200) {
 					console.log(reqModalTC.status);
@@ -254,11 +256,11 @@
 					// displayArea.innerHTML = serverData;
 					var rs = JSON.parse(serverData);
 					var modalTbBody = '';
-					for(item of rs){
+					for (item of rs) {
 						modalTbBody += '<tr>';
-						modalTbBody += '<td><label class="form-check-label" for="modalCheckBoxTC_e">'+item['Tenancy_Commodity_e']+'</label></td>'
-						modalTbBody += '<td><label class="form-check-label" for="modalCheckBoxTC_c">'+item['Tenancy_Commodity_c']+'</label></td>';
-						modalTbBody += '<td><label class="form-check-label" for="modalNosStall">'+item['nos_stall']+'</label></td>'
+						modalTbBody += '<td><label class="form-check-label" for="modalCheckBoxTC_e">' + item['Tenancy_Commodity_e'] + '</label></td>'
+						modalTbBody += '<td><label class="form-check-label" for="modalCheckBoxTC_c">' + item['Tenancy_Commodity_c'] + '</label></td>';
+						modalTbBody += '<td><label class="form-check-label" for="modalNosStall">' + item['nos_stall'] + '</label></td>'
 						modalTbBody += '</tr>';
 					}
 					document.getElementById('modalTbBody').innerHTML = modalTbBody;
@@ -268,330 +270,424 @@
 		// End Delete Icon
 
 		// Modal Icon
-		function clickModalEditIcon(){
-			document.getElementById('modalName_e').readOnly = false;
-			document.getElementById('modalName_c').readOnly = false;
-			// document.getElementById('modalRegion_e').value = item['Region_e'];
-			// document.getElementById('modalRegion_c').value = item['Region_c'];
-			// document.getElementById('modalDistrict_e').value = item['District_e'];
-			// document.getElementById('modalDistrict_c').value = item['District_c'];
-			document.getElementById('modalAddress_e').readOnly = false;
-			document.getElementById('modalAddress_c').readOnly = false;
-			document.getElementById('modalBH_e').readOnly = false;
-			document.getElementById('modalBH_c').readOnly = false;
-			document.getElementById('map-container-google-2').style.display = 'none';
-			document.getElementById('modalDivCoordinate').style.display = 'block';
-			document.getElementById('modalCoordinate').readOnly = false;
-			document.getElementById('modalContact_1').readOnly = false;
-			document.getElementById('modalContact_2').readOnly = false;
-			
+		function clickModalEditIcon() {
+			changeModalMode('edit');
 		}
-    </script>
+
+		function changeModalMode(mode){
+			if(mode == 'edit'){
+				document.getElementById('modalName_e').readOnly = false;
+				document.getElementById('modalName_c').readOnly = false;
+				// document.getElementById('modalRegion_e').value = item['Region_e'];
+				// document.getElementById('modalRegion_c').value = item['Region_c'];
+				// document.getElementById('modalDistrict_e').value = item['District_e'];
+				// document.getElementById('modalDistrict_c').value = item['District_c'];
+				document.getElementById('modalAddress_e').readOnly = false;
+				document.getElementById('modalAddress_c').readOnly = false;
+				document.getElementById('modalBH_e').readOnly = false;
+				document.getElementById('modalBH_c').readOnly = false;
+				document.getElementById('map-container-google-2').style.display = 'none';
+				document.getElementById('modalDivCoordinate').style.display = 'block';
+				document.getElementById('modalCoordinate').readOnly = false;
+				document.getElementById('modalContact_1').readOnly = false;
+				document.getElementById('modalContact_2').readOnly = false;
+			}
+			if(mode == 'view'){
+				document.getElementById('modalName_e').readOnly = true;
+				document.getElementById('modalName_c').readOnly = true;
+				// document.getElementById('modalRegion_e').value = item['Region_e'];
+				// document.getElementById('modalRegion_c').value = item['Region_c'];
+				// document.getElementById('modalDistrict_e').value = item['District_e'];
+				// document.getElementById('modalDistrict_c').value = item['District_c'];
+				document.getElementById('modalAddress_e').readOnly = true;
+				document.getElementById('modalAddress_c').readOnly = true;
+				document.getElementById('modalBH_e').readOnly = true;
+				document.getElementById('modalBH_c').readOnly = true;
+				document.getElementById('map-container-google-2').style.display = 'block';
+				document.getElementById('modalDivCoordinate').style.display = 'none';
+				document.getElementById('modalCoordinate').readOnly = true;
+				document.getElementById('modalContact_1').readOnly = true;
+				document.getElementById('modalContact_2').readOnly = true;
+			}
+		}
+		// end Modal Icon
+		var reqDelete = new XMLHttpRequest();
+		// go delete
+		function goDelete(){
+			var market_e = document.getElementById('modalName_e').value;
+			var url = path + '/market/index.php/market/' + market_e;
+			reqDelete.open("delete", url, true);  // true=>asynchronous, false=>synchronous
+			reqDelete.onreadystatechange = deleteMarket;
+			reqDelete.send(null);
+		}
+
+		function deleteMarket(){
+			if (reqDelete.readyState == 4) {
+				if (reqDelete.status == 200) {
+					var serverData = reqDelete.responseText;
+					var rs = JSON.parse(serverData);
+					if(rs['status'] == 'success'){
+						var search_tc = document.getElementById('Tenancy_Commodity_e').value;
+						var search_region = document.getElementById("Region_e").value;
+						var search_district = document.getElementById('District_e').value;
+						console.log(Region_e + ', ' + search_district + ', ' + search_tc);
+						if(search_tc == ''){
+							if(search_district == ''){
+								clickRegion();
+							} else {
+								clickDistrict();
+							}
+						} else {
+							clickTC();
+						}
+						document.getElementById('btnModalCancel').click();
+					}
+				}
+			}
+		}
+		// end go delete
+	</script>
 </head>
 
-<body >
+<body>
 	<div class="wrapper">
-		<nav id="sidebar" class="sidebar js-sidebar" >
+		<nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
 				<a class="sidebar-brand" href="index.html">
-		  <span class="align-middle">ATWD</span>
-		</a>
-	
-		<div class="row" >
-			<div class="col-12 col-lg-12" >
-				<div class="card">
-					<div class="card-header">
-						<h5 class="card-title mb-0">Region</h5>
-					</div>
-					<div class="card-body">
-						<select class="form-select mb-3" id="Region_e" onchange="clickRegion(); changeDistrict(); return false;">
-						<option value="" selected>Please Select Region</option>
-						<option value="Hong Kong & Islands" >Hong Kong & Islands</option>
-						<option value="Kowloon" >Kowloon</option>
-						<option value="New Territories" >New Territories</option>
-					</select>
-					</div>
-					<div class="card-header" id="headerDistrict" style="display: none;">
-						<h5 class="card-title mb-0">District
-					</div>
-					<div class="card-body" id="bodyDistrict" style="display: none;">
-						<select class="form-select mb-3" id="District_e" onchange="clickDistrict(); return false;">
-						<option selected>Please Select District</option>
-						<option href="javascript:setDistrict('CW');">One</option>
-						<option href="javascript:setDistrict('CW');">Two</option>
-						<option href="javascript:setDistrict('CW');">Three</option>
-					</select>
-					</div>
-					<div class="card-header" id="headerMarket" style="display: none;">
-						<h5 class="card-title mb-0">Market
-					</div>
-					<div class="card-body"id="bodyMarket" style="display: none;">
-						<select class="form-select mb-3" id="Market_e">
-						<option selected>Please Select Market</option>
-						<option>One</option>
-						<option>Two</option>
-						<option>Three</option>
-					</select>
-					</div>
-					<div class="card-header">
-						<h5 class="card-title mb-0">Commodity
-					</div>
-					<div class="card-body">
-						<select class="form-select mb-3" id="Tenancy_Commodity_e" onchange="clickTC(); return false;">
-						<option selected>Please Select Commodity</option>
-						<option>One</option>
-						<option>Two</option>
-						<option>Three</option>
-					</select>
+					<span class="align-middle">ATWD</span>
+				</a>
+
+				<div class="row">
+					<div class="col-12 col-lg-12">
+						<div class="card">
+							<div class="card-header">
+								<h5 class="card-title mb-0">Region</h5>
+							</div>
+							<div class="card-body">
+								<select class="form-select mb-3" id="Region_e"
+									onchange="clickRegion(); changeDistrict(); return false;">
+									<option value="" selected>Please Select Region</option>
+									<option value="Hong Kong & Islands">Hong Kong & Islands</option>
+									<option value="Kowloon">Kowloon</option>
+									<option value="New Territories">New Territories</option>
+								</select>
+							</div>
+							<div class="card-header" id="headerDistrict" style="display: none;">
+								<h5 class="card-title mb-0">District
+							</div>
+							<div class="card-body" id="bodyDistrict" style="display: none;">
+								<select class="form-select mb-3" id="District_e"
+									onchange="clickDistrict(); return false;">
+									<option value="" selected>Please Select District</option>
+									<option href="javascript:setDistrict('CW');">One</option>
+									<option href="javascript:setDistrict('CW');">Two</option>
+									<option href="javascript:setDistrict('CW');">Three</option>
+								</select>
+							</div>
+							<div class="card-header" id="headerMarket" style="display: none;">
+								<h5 class="card-title mb-0">Market
+							</div>
+							<div class="card-body" id="bodyMarket" style="display: none;">
+								<select class="form-select mb-3" id="Market_e">
+									<option value="" selected>Please Select Market</option>
+									<option>One</option>
+									<option>Two</option>
+									<option>Three</option>
+								</select>
+							</div>
+							<div class="card-header">
+								<h5 class="card-title mb-0">Commodity
+							</div>
+							<div class="card-body">
+								<select class="form-select mb-3" id="Tenancy_Commodity_e"
+									onchange="clickTC(); return false;">
+									<option selected>Please Select Commodity</option>
+									<option>One</option>
+									<option>Two</option>
+									<option>Three</option>
+								</select>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	
-	
 		</nav>
-	
+
 		<div class="main">
 			<nav class="navbar navbar-expand navbar-light navbar-bg">
 				<a class="sidebar-toggle js-sidebar-toggle">
-		  <i class="hamburger align-self-center"></i>
-		</a>
-		
+					<i class="hamburger align-self-center"></i>
+				</a>
+
 				<div class="navbar-collapse collapse">
 					<ul class="navbar-nav navbar-align">
 						<li class="nav-item dropdown">
-		
+
 						</li>
 					</ul>
 				</div>
 			</nav>
-		
+
 			<main class="content">
 				<div class="container-fluid p-0">
 					<h1 class="h3 mb-3"><strong>Market</strong> List</h1>
-					</div>
-
-
-	<div class="row">
-		<div class="col-12 col-lg-12 col-xxl-12	 d-flex">
-			<div class="card flex-fill" >
-				<div class="card-header">
-
-					<!-- <h5 class="card-title mb-0">Click to view details</h5> -->
 				</div>
-				<table class="table table-hover my-0" id="dataTable">
-					<thead>
-						<tr>
-							<th class="d-none d-md-table-cell">#</th>
-							<th class="d-none d-md-table-cell">Region</th>
-							<th class="d-none d-md-table-cell">District</th>
-							<th class="d-none d-md-table-cell">Market</th>
-							<th class="d-none d-md-table-cell">Address</th>
-							<th class="d-none d-md-table-cell">Business Hours</th>
-							<th class="d-none d-md-table-cell">Contact</th>
-							<th class="d-none d-md-table-cell">Action</th>
-						</tr>
-					</thead>
-					<tbody id="dataBody">
-						<tr>
-							<td>Project Apollo</td>
-							<td class="d-none d-xl-table-cell">01/01/2021</td>
-							<td >31/06/2021</td>
-							<td><span class="badge bg-success">Done</span></td>
-							<td >Vanessa Tucker</td>
-							<td >
-								<div class="mb-2">
-									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+
+
+				<div class="row">
+					<div class="col-12 col-lg-12 col-xxl-12	 d-flex">
+						<div class="card flex-fill">
+							<div class="card-header">
+
+								<!-- <h5 class="card-title mb-0">Click to view details</h5> -->
+							</div>
+							<table class="table table-hover my-0" id="dataTable">
+								<thead>
+									<tr>
+										<th class="d-none d-md-table-cell">#</th>
+										<th class="d-none d-md-table-cell">Region</th>
+										<th class="d-none d-md-table-cell">District</th>
+										<th class="d-none d-md-table-cell">Market</th>
+										<th class="d-none d-md-table-cell">Address</th>
+										<th class="d-none d-md-table-cell">Business Hours</th>
+										<th class="d-none d-md-table-cell">Contact</th>
+										<th class="d-none d-md-table-cell">Action</th>
+									</tr>
+								</thead>
+								<tbody id="dataBody">
+									<tr>
+										<td>Project Apollo</td>
+										<td class="d-none d-xl-table-cell">01/01/2021</td>
+										<td>31/06/2021</td>
+										<td><span class="badge bg-success">Done</span></td>
+										<td>Vanessa Tucker</td>
+										<td>
+											<div class="mb-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+													viewBox="0 0 24 24" fill="none" stroke="currentColor"
+													stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+													class="feather feather-edit align-middle me-2">
+													<path
+														d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7">
+													</path>
+													<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z">
+													</path>
+												</svg>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+			</main>
+
+			
+
+			<!-- modal for confirmation of delete operation-->
+			<div class="modal fade " id="editModal" data-bs-backdrop="static" data-bs-keyboard="false"
+				tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg" style="width:100%;">
+					<div class="modal-content ">
+						<div class="modal-header">
+							<h5 class="modal-title" id="editModalLabel">Market Detail
+								<a id="modalEditIcon" href="" onclick="clickModalEditIcon();return false;">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+										fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+										stroke-linejoin="round" class="feather feather-edit align-middle me-2">
+										<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+										<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+									</svg>
+								</a>
+							</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+
+						<div class="modal-body">
+							<div class="row">
+								<div class="input-group mb-2" style="display: none;">
+									<span class="input-group-text col-sm-3" id="basic-addon1">Market ID</span>
+									<input type="text" class="form-control col-sm-9" aria-describedby="basic-addon1"
+										id="modalMarketID" readonly>
 								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+								<div class="col-lg-6">
+									<!-- col-lg-6 -->
+									<div class="row g-3">
+										<div class="col-12">
+											<label for="modalName_e" class="form-label">Market Name</label>
+											<input type="text" class="form-control" id="modalName_e" readonly>
+										</div>
+										<div class="col-12">
+											<label for="modalRegion_e" class="form-label">Region</label>
+											<input type="text" class="form-control" id="modalRegion_e" readonly>
+										</div>
+										<div class="col-12">
+											<label for="modalRegion_e" class="form-label">District</label>
+											<input type="text" class="form-control" id="modalDistrict_e" readonly>
+										</div>
+										<div class="col-12">
+											<label for="modalAddress_e" class="form-label">Address</label>
+											<input type="text" class="form-control" id="modalAddress_e" readonly>
+										</div>
+										<div class="col-12">
+											<label for="modalAddress_e" class="form-label">Business Hours</label>
+											<input type="text" class="form-control" id="modalBH_e" readonly>
+										</div>
+										<div class="col-12">
+											<label for="modalContact_1" class="form-label">Contact 聯絡電話 1</label>
+											<input type="text" class="form-control" id="modalContact_1" readonly>
+										</div>
+										<div class="col-12" style="display:none;" id="modalDivCoordinate">
+											<label for="modalContact_2" class="form-label">Coordinate</label>
+											<input type="text" class="form-control" id="modalCoordinate" readonly>
+										</div>
+									</div>
+
+									<div class="input-group mb-4">
+
+									</div>
+
+								</div> <!-- End col-lg-6 -->
+
+								<div class="col-lg-6">
+									<!-- col-lg-6 -->
+									<div class="row g-3">
+										<div class="col-12">
+											<label for="modalName_c" class="form-label">街市</label>
+											<input type="text" class="form-control" id="modalName_c" readonly>
+										</div>
+										<div class="col-12">
+											<label for="modalRegion_c" class="form-label">區域</label>
+											<input type="text" class="form-control" id="modalRegion_c" readonly>
+										</div>
+										<div class="col-12">
+											<label for="modalRegion_e" class="form-label">地區</label>
+											<input type="text" class="form-control" id="modalDistrict_c" readonly>
+										</div>
+										<div class="col-12">
+											<label for="modalAddress_c" class="form-label">地址</label>
+											<input type="text" class="form-control" id="modalAddress_c" readonly>
+										</div>
+										<div class="col-12">
+											<label for="modalBH_c" class="form-label">營業時間</label>
+											<input type="text" class="form-control" id="modalBH_c" readonly>
+										</div>
+										<div class="col-12">
+											<label for="modalContact_2" class="form-label">Contact 聯絡電話 2</label>
+											<input type="text" class="form-control" id="modalContact_2" readonly>
+										</div>
+									</div>
+								</div> <!-- End col-lg-6 -->
+								<div class="col-12">
+									<div id="map-container-google-2" class="z-depth-1-half map-container"
+										style="height:100%;">
+										<iframe
+											src="https://maps.google.com/maps?q=22.292323,114.199405&t=&z=13&ie=UTF8&iwloc=&output=embed"
+											frameborder="0" style="border:0;height:auto;width:100%;"
+											id="google-map-iframe" allowfullscreen></iframe>
+									</div>
+								</div>
+								<div class="col-12" id="modal_tc">
+
+									<table class="table table-hover my-0">
+										<thead>
+											<!-- <th scope="col"><div class="icon"><i class="bi bi-plus-circle"></i></div></th> -->
+											<th scope="col">Tenancy Commodity</th>
+											<th scope="col"></th>
+											<th scope="col">Nos Stall</th>
+										</thead>
+										<tbody id="modalTbBody">
+											<tr>
+												<!-- <td><input class="form-check-input" type="checkbox" id="modalCheckBoxTC_e" value="'+rs['Data']['Tenancy_Commodity'][i]['Tenancy_Commodity_e']+'" checked></td> -->
+												<td><label class="form-check-label" for="modalCheckBoxTC_e">modal
+														CheckBox
+														TC_e</label></td>
+												<td><label class="form-check-label" for="modalCheckBoxTC_c">modal
+														CheckBox
+														TC_c</label></td>
+												<td><label class="form-check-label" for="modalNosStall">999</label></td>
+											</tr>
+											<tr>
+												<!-- <td><input class="form-check-input" type="checkbox" id="modalCheckBoxTC_e" value="'+rs['Data']['Tenancy_Commodity'][i]['Tenancy_Commodity_e']+'" checked></td> -->
+												<td><label class="form-check-label" for="modalCheckBoxTC_e">modal
+														CheckBox
+														TC_e</label></td>
+												<td><label class="form-check-label" for="modalCheckBoxTC_c">modal
+														CheckBox
+														TC_c</label></td>
+												<td><label class="form-check-label" for="modalNosStall">999</label></td>
+											</tr>
+											<tr>
+												<!-- <td><input class="form-check-input" type="checkbox" id="modalCheckBoxTC_e" value="'+rs['Data']['Tenancy_Commodity'][i]['Tenancy_Commodity_e']+'" checked></td> -->
+												<td><label class="form-check-label" for="modalCheckBoxTC_e">modal
+														CheckBox
+														TC_e</label></td>
+												<td><label class="form-check-label" for="modalCheckBoxTC_c">modal
+														CheckBox
+														TC_c</label></td>
+												<td><label class="form-check-label" for="modalNosStall">999</label></td>
+											</tr>
+											<tr>
+												<!-- <td><input class="form-check-input" type="checkbox" id="modalCheckBoxTC_e" value="'+rs['Data']['Tenancy_Commodity'][i]['Tenancy_Commodity_e']+'" checked></td> -->
+												<td><label class="form-check-label" for="modalCheckBoxTC_e">modal
+														CheckBox
+														TC_e</label></td>
+												<td><label class="form-check-label" for="modalCheckBoxTC_c">modal
+														CheckBox
+														TC_c</label></td>
+												<td><label class="form-check-label" for="modalNosStall">999</label></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+									id="btnModalCancel">Cancel</button>
+								<!-- <button type="button" class="btn btn-primary" id="modalAddButton" onclick="goAdd()">Add</button>
+            <button type="button" class="btn btn-primary" id="modalUpdateButton" onclick="goUpdate()">Update</button> -->
+								<button type="button" class="btn btn-primary" id="modalDeleteButton"
+									onclick="goDelete()">Delete</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
+
+			<footer class="footer">
+
+			</footer>
+
+
 		</div>
 	</div>
-</div>
-
-</main>
-
-
-<!-- modal for confirmation of delete operation-->
-<div class="modal fade " id="confirmDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" style="width:100%;">
-    <div class="modal-content ">
-      <div class="modal-header">
-          <h5 class="modal-title" id="confirmDeleteModalLabel">Market Detail 
-			<a id="modalEditIcon" href="" onclick="clickModalEditIcon();return false;">
-				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-			</a>
-		  </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-
-      <div class="modal-body">
-        <!-- <div class="input-group mb-2">
-            <span class="input-group-text col-sm-4" id="basic-addon1">Market ID</span>
-            <input type="text" class="form-control col-sm-8" aria-describedby="basic-addon1" id="modalMarketID" readonly>
-        </div> -->
-		<div class="row">
-			<div class="input-group mb-2" style="display: none;">
-				<span class="input-group-text col-sm-3" id="basic-addon1">Market ID</span>
-				<input type="text" class="form-control col-sm-9" aria-describedby="basic-addon1" id="modalMarketID" readonly>
-			</div>
-			<div class="col-lg-6"> <!-- col-lg-6 -->
-				<div class="row g-3">
-					<div class="col-12">
-					<label for="modalName_e" class="form-label">Market Name</label>
-					<input type="text" class="form-control" id="modalName_e" readonly>
-					</div>
-					<div class="col-12">
-					<label for="modalRegion_e" class="form-label">Region</label>
-					<input type="text" class="form-control" id="modalRegion_e" readonly>
-					</div>
-					<div class="col-12">
-					<label for="modalRegion_e" class="form-label">District</label>
-					<input type="text" class="form-control" id="modalDistrict_e" readonly>
-					</div>
-					<div class="col-12">
-					<label for="modalAddress_e" class="form-label">Address</label>
-					<input type="text" class="form-control" id="modalAddress_e" readonly>
-					</div>
-					<div class="col-12">
-					<label for="modalAddress_e" class="form-label">Business Hours</label>
-					<input type="text" class="form-control" id="modalBH_e" readonly>
-					</div>
-					<div class="col-12">
-					<label for="modalContact_1" class="form-label">Contact 聯絡電話 1</label>
-					<input type="text" class="form-control" id="modalContact_1" readonly>
-					</div>
-					<div class="col-12" style="display:none;" id="modalDivCoordinate">
-					<label for="modalContact_2" class="form-label">Coordinate</label>
-					<input type="text" class="form-control" id="modalCoordinate" readonly>
-					</div>
-				</div>
-				
-				<div class="input-group mb-4">
-					
-				</div>    
-				
-			</div> <!-- End col-lg-6 -->
-
-			<div class="col-lg-6"> <!-- col-lg-6 -->
-				<div class="row g-3">
-					<div class="col-12">
-						<label for="modalName_c" class="form-label">街市</label>
-						<input type="text" class="form-control" id="modalName_c" readonly>
-					</div>
-					<div class="col-12">
-						<label for="modalRegion_c" class="form-label">區域</label>
-						<input type="text" class="form-control" id="modalRegion_c" readonly>
-					</div>
-					<div class="col-12">
-					<label for="modalRegion_e" class="form-label">地區</label>
-					<input type="text" class="form-control" id="modalDistrict_c" readonly>
-					</div>
-					<div class="col-12">
-						<label for="modalAddress_c" class="form-label">地址</label>
-						<input type="text" class="form-control" id="modalAddress_c" readonly>
-					</div>
-					<div class="col-12">
-						<label for="modalBH_c" class="form-label">營業時間</label>
-						<input type="text" class="form-control" id="modalBH_c" readonly>
-					</div>
-					<div class="col-12">
-					<label for="modalContact_2" class="form-label">Contact 聯絡電話 2</label>
-					<input type="text" class="form-control" id="modalContact_2" readonly>
-					</div>
-				</div>  
-			</div> <!-- End col-lg-6 -->
-			<div class="col-12">
-				<div id="map-container-google-2" class="z-depth-1-half map-container" style="height:100%;">
-					<iframe src="https://maps.google.com/maps?q=22.292323,114.199405&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0"
-						style="border:0;height:auto;width:100%;" id="google-map-iframe" allowfullscreen ></iframe>
-				</div>   
-			</div>
-			<div class="col-12" id="modal_tc">
-	
-				<table class="table table-hover my-0">
-					<thead>
-						<!-- <th scope="col"><div class="icon"><i class="bi bi-plus-circle"></i></div></th> -->
-						<th scope="col">Tenancy Commodity</th>
-						<th scope="col"></th>
-						<th scope="col">Nos Stall</th>
-					</thead>
-					<tbody id="modalTbBody">
-						<tr>
-							<!-- <td><input class="form-check-input" type="checkbox" id="modalCheckBoxTC_e" value="'+rs['Data']['Tenancy_Commodity'][i]['Tenancy_Commodity_e']+'" checked></td> -->
-							<td><label class="form-check-label" for="modalCheckBoxTC_e">modal CheckBox TC_e</label></td>
-							<td><label class="form-check-label" for="modalCheckBoxTC_c">modal CheckBox TC_c</label></td>
-							<td><label class="form-check-label" for="modalNosStall">999</label></td>
-						</tr>
-						<tr>
-							<!-- <td><input class="form-check-input" type="checkbox" id="modalCheckBoxTC_e" value="'+rs['Data']['Tenancy_Commodity'][i]['Tenancy_Commodity_e']+'" checked></td> -->
-							<td><label class="form-check-label" for="modalCheckBoxTC_e">modal CheckBox TC_e</label></td>
-							<td><label class="form-check-label" for="modalCheckBoxTC_c">modal CheckBox TC_c</label></td>
-							<td><label class="form-check-label" for="modalNosStall">999</label></td>
-						</tr>
-						<tr>
-							<!-- <td><input class="form-check-input" type="checkbox" id="modalCheckBoxTC_e" value="'+rs['Data']['Tenancy_Commodity'][i]['Tenancy_Commodity_e']+'" checked></td> -->
-							<td><label class="form-check-label" for="modalCheckBoxTC_e">modal CheckBox TC_e</label></td>
-							<td><label class="form-check-label" for="modalCheckBoxTC_c">modal CheckBox TC_c</label></td>
-							<td><label class="form-check-label" for="modalNosStall">999</label></td>
-						</tr>
-						<tr>
-							<!-- <td><input class="form-check-input" type="checkbox" id="modalCheckBoxTC_e" value="'+rs['Data']['Tenancy_Commodity'][i]['Tenancy_Commodity_e']+'" checked></td> -->
-							<td><label class="form-check-label" for="modalCheckBoxTC_e">modal CheckBox TC_e</label></td>
-							<td><label class="form-check-label" for="modalCheckBoxTC_c">modal CheckBox TC_c</label></td>
-							<td><label class="form-check-label" for="modalNosStall">999</label></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div> 
-
-
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnModalCancel">Cancel</button>
-            <!-- <button type="button" class="btn btn-primary" id="modalAddButton" onclick="goAdd()">Add</button>
-            <button type="button" class="btn btn-primary" id="modalUpdateButton" onclick="goUpdate()">Update</button> -->
-            <button type="button" class="btn btn-primary" id="modalDeleteButton" onclick="goDelete()">Delete</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<footer class="footer">
-
-</footer>
-
-
-</div>
-</div>
 
 	<script src="js/app.js"></script>
 	<script type="text/javascript">
 
-		
+
 		var path = location.protocol + "//" + location.hostname + ":" + location.port;
 
-		$(function(){
+		$(function () {
 			listMarket();
 			loadTC();
 		});
 		var request = new XMLHttpRequest();
 		var rsArray;
-		function listMarket(){
-			var url=path+'/market/index.php/market/all';
+		function listMarket() {
+			var url = path + '/market/index.php/market/all';
 			request.open("GET", url, true);
-			request.onreadystatechange=updateTable;
+			request.onreadystatechange = updateTable;
 			request.send(null);
 		}
 		var allMarketList = [];
-		function updateTable(){
-			if(request.readyState==4){
-				if(request.status==200){
+		function updateTable() {
+			if (request.readyState == 4) {
+				if (request.status == 200) {
 					var serverData = request.responseText;
 					// console.log(serverData);
 					rsArray = JSON.parse(serverData);
@@ -599,16 +695,16 @@ aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
 					filteredMarket = allMarketList;
 					var html = '';
 					var idx = 1;
-					for(item of rsArray){
+					for (item of rsArray) {
 						html += '<tr>';
-						html += '<td class="d-none d-md-table-cell">'+idx+'</td>';
-						html += '<td class="d-none d-md-table-cell">'+item['Region_e']+'</td>';
-						html += '<td class="d-none d-md-table-cell">'+item['District_e']+'</td>';
-						html += '<td class="d-none d-md-table-cell">'+item['Market_e']+'</td>';
-						html += '<td class="d-none d-md-table-cell">'+item['Address_e']+'</td>';
-						html += '<td class="d-none d-md-table-cell">'+item['Business_Hours_e']+'</td>';
-						html += '<td class="d-none d-md-table-cell">'+item['Contact_1']+' '+item['Contact_2']+'</td>';
-						html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;"><a href="" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" onclick="clickEditIcon('+"'"+item['Market_e']+"'"+');return false;">';
+						html += '<td class="d-none d-md-table-cell">' + idx + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['Region_e'] + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['District_e'] + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['Market_e'] + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['Address_e'] + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['Business_Hours_e'] + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['Contact_1'] + ' ' + item['Contact_2'] + '</td>';
+						html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;"><a href="" data-bs-toggle="modal" data-bs-target="#editModal" onclick="changeModalMode('+"'view'"+');clickEditIcon(' + "'" + item['Market_e'] + "'" + ');return false;">';
 						html += '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>';
 						html += '</a></div></td></tr>';
 						idx++;
@@ -619,38 +715,36 @@ aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
 			}
 		}
 
-		function loadTC(){
+		function loadTC() {
 			console.log('loadTC');
-            var url = path+"/market/index.php/market/field/tc";
+			var url = path + "/market/index.php/market/field/tc";
 
 
-            requestField.open("GET", url, true);  // true=>asynchronous, false=>synchronous
-            requestField.onreadystatechange = updateTC;
-            requestField.send(null);
+			requestField.open("GET", url, true);  // true=>asynchronous, false=>synchronous
+			requestField.onreadystatechange = updateTC;
+			requestField.send(null);
 		}
 
 		function updateTC() {   // callback
-            if (requestField.readyState == 4) {
-                if (requestField.status == 200) {
+			if (requestField.readyState == 4) {
+				if (requestField.status == 200) {
 					console.log(requestField.status);
-                    var serverData = requestField.responseText;
-                    // displayArea.innerHTML = serverData;
-                    var resultArray = JSON.parse(serverData);
+					var serverData = requestField.responseText;
+					// displayArea.innerHTML = serverData;
+					var resultArray = JSON.parse(serverData);
 					var html = '<option value="" selected>Please Select Commodity</option>';
-					for(item of resultArray){
-						html += '<option value="'+item['Tenancy_Commodity_e']+'">';
-						html +=	item['Tenancy_Commodity_e'];
-						html +=	'</option>';
+					for (item of resultArray) {
+						html += '<option value="' + item['Tenancy_Commodity_e'] + '">';
+						html += item['Tenancy_Commodity_e'];
+						html += '</option>';
 					}
 					document.getElementById('Tenancy_Commodity_e').innerHTML = html;
-                }
-				
-            }
-        }
+				}
+
+			}
+		}
 	</script>
 
 </body>
 
 </html>
-
-
