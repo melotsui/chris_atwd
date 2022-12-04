@@ -80,7 +80,7 @@ class MarketService {
             if($field == 'tc'){ // 127.0.0.1/market/index.php/market/field/tc
                 $region = array_shift($parameters);
                 $output = array();
-                $sql = "SELECT DISTINCT Tenancy_Commodity_e FROM market;";
+                $sql = "SELECT DISTINCT Tenancy_Commodity_e, Tenancy_Commodity_c FROM market;";
                 try {
                     $dbresult = $conn->query($sql);
                     // successfully retrieved the records
