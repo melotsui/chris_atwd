@@ -9,7 +9,7 @@ class MarketService {
         $apiType = array_shift($parameters);
         if($apiType==='all') { // 127.0.0.1/market/index.php/market/all
             $output = array();
-            $sql = "SELECT DISTINCT Market_e, Market_c, Region_e, Region_c, District_e, District_c, Address_e, Address_c, Business_Hours_e, Business_Hours_c, Coordinate, Contact_1, Contact_2 FROM market m ";
+            $sql = "SELECT mID, Market_e, Market_c, Region_e, Region_c, District_e, District_c, Address_e, Address_c, Business_Hours_e, Business_Hours_c, Coordinate, Contact_1, Contact_2, Tenancy_Commodity_e, Tenancy_Commodity_c, nos_stall FROM market m ";
             try {
                 $dbresult = $conn->query($sql);
                 // successfully retrieved the records
@@ -147,7 +147,7 @@ class MarketService {
             //     echo json_encode($output, JSON_UNESCAPED_UNICODE);
             //     exit;
             // }
-            $sql = "SELECT DISTINCT Market_e, Region_e, District_e, Address_e, Business_Hours_e, Contact_1, Contact_2 
+            $sql = "SELECT mID, Market_e, Region_e, District_e, Address_e, Business_Hours_e, Contact_1, Contact_2, Tenancy_Commodity_e 
                     FROM market WHERE Tenancy_Commodity_e LIKE '%$tc%'";
             try {
                 $dbresult = $conn->query($sql);
@@ -181,7 +181,7 @@ class MarketService {
             //     echo json_encode($output, JSON_UNESCAPED_UNICODE);
             //     exit;
             // }
-            $sql = "SELECT DISTINCT Market_e, Region_e, District_e, Address_e, Business_Hours_e, Contact_1, Contact_2 FROM market WHERE Region_e like '%$Region_e%'";
+            $sql = "SELECT mID, Market_e, Region_e, District_e, Address_e, Business_Hours_e, Contact_1, Contact_2, Tenancy_Commodity_e FROM market WHERE Region_e like '%$Region_e%'";
             try {
                 $dbresult = $conn->query($sql);
                 // successfully retrieved the records
@@ -211,7 +211,7 @@ class MarketService {
         //        echo json_encode($output, JSON_UNESCAPED_UNICODE);
         //        exit;
         //    }
-           $sql = "SELECT DISTINCT Market_e, Region_e, District_e, Address_e, Business_Hours_e, Contact_1, Contact_2 FROM market WHERE District_e like '%$District_e%'";
+           $sql = "SELECT mID, Market_e, Region_e, District_e, Address_e, Business_Hours_e, Contact_1, Contact_2, Tenancy_Commodity_e FROM market WHERE District_e like '%$District_e%'";
            try {
                $dbresult = $conn->query($sql);
                $output = array();
@@ -294,19 +294,39 @@ class MarketService {
         $body = file_get_contents('php://input');
         $dataArray = json_decode($body, true); // true means return an array
         $mID = $dataArray['mID'];
-        $districtID = $dataArray['districtID'];
-        $map_type = $dataArray['map_type'];
-        $name_e = $dataArray['name_e'];
-        $address_e = $dataArray['address_e'];
+        $Market_e = $dataArray['Market_e'];
+        $Market_c = $dataArray['Market_c'];
+        $Region_e = $dataArray['Region_e'];
+        $Region_c = $dataArray['Region_c'];
+        $District_e = $dataArray['District_e'];
+        $District_c = $dataArray['District_c'];
+        $Address_e = $dataArray['Address_e'];
+        $Address_c = $dataArray['Address_c'];
+        $Business_Hours_e = $dataArray['Business_Hours_e'];
+        $Business_Hours_c = $dataArray['Business_Hours_e'];
+        $Coordinate = $dataArray['Coordinate'];
+        $Contact_1 = $dataArray['Contact_1'];
+        $Contact_2 = $dataArray['Contact_2'];
+        $Tenancy_Commodity_e = $dataArray['Tenancy_Commodity_e'];
+        $Tenancy_Commodity_c = $dataArray['Tenancy_Commodity_c'];
+        $nos_stall = $dataArray['nos_stall'];
 
         require_once 'db.php';
 
-        $sql = "UPDATE facility SET districtID='{$districtID}', map_type='{$map_type}', name_e='{$name_e}', address_e='{$address_e}' WHERE mapID={$mapID}";
+        $sql = "UPDATE market SET Market_e='{$Market_e}', Market_c='{$Market_c}',
+                 Region_e='{$Region_e}', Region_c='{$Region_c}',
+                 District_e='{$District_e}', District_c='{$District_c}',
+                 Address_e='{$Address_e}', Address_c='{$Address_c}',
+                 Business_Hours_e='{$Business_Hours_e}', Business_Hours_c='{$Business_Hours_c}',
+                 Coordinate='{$Coordinate}',
+                 Contact_1='{$Contact_1}', Contact_2='{$Contact_2}',
+                 Tenancy_Commodity_e='{$Tenancy_Commodity_e}', Tenancy_Commodity_c='{$Tenancy_Commodity_c}',
+                 nos_stall='{$nos_stall}' WHERE mID=$mID";
         try {
             $dbresult = $conn->query($sql);
             $output = array();
             $output['status'] = 'success';
-            $output['message'] = "Facility with ID $mapID updated successfully";
+            $output['message'] = "Market with ID $mID updated successfully";
             echo json_encode($output);
             exit;
         } 
@@ -320,31 +340,73 @@ class MarketService {
         }
     }
 
-    function POST() {
+    function POST()
+    {
+        $body = file_get_contents('php://input');
+        $dataArray = json_decode($body, true); // true means return an array
+        $mID = $dataArray['mID'];
+        $Market_e = $dataArray['Market_e'];
+        $Market_c = $dataArray['Market_c'];
+        $Region_e = $dataArray['Region_e'];
+        $Region_c = $dataArray['Region_c'];
+        $District_e = $dataArray['District_e'];
+        $District_c = $dataArray['District_c'];
+        $Address_e = $dataArray['Address_e'];
+        $Address_c = $dataArray['Address_c'];
+        $Business_Hours_e = $dataArray['Business_Hours_e'];
+        $Business_Hours_c = $dataArray['Business_Hours_e'];
+        $Coordinate = $dataArray['Coordinate'];
+        $Contact_1 = $dataArray['Contact_1'];
+        $Contact_2 = $dataArray['Contact_2'];
+        $Tenancy_Commodity_e = $dataArray['Tenancy_Commodity_e'];
+        $Tenancy_Commodity_c = $dataArray['Tenancy_Commodity_c'];
+        $nos_stall = $dataArray['nos_stall'];
 
+        require_once 'db.php';
+
+        $sql = "INSERT INTO market VALUES (((select max(mID) from market subquery)+1),
+         '$Market_e','$Market_c','$Region_e','$Region_c','$District_e','$District_c',
+         '$Address_e','$Address_c','$Business_Hours_e','$Business_Hours_c',
+         '$Coordinate','$Contact_1','$Contact_2','$Tenancy_Commodity_e',
+         '$Tenancy_Commodity_c',$nos_stall)";
+        try {
+            $dbresult = $conn->query($sql);
+            $output = array();
+            $output['status'] = 'success';
+            $output['message'] = "Market with ID $mID inserted successfully";
+            echo json_encode($output);
+            exit;
+        } catch (Exception $e) {
+            $output = array();
+            $output['status'] = 'error';
+            $output['code'] = '2005';
+            $output['message'] = 'SQL execution failure: UPDATE failed';
+            echo json_encode($output);
+            exit;
+        }
     }
 
-    function DELETE($market_e) {
+    function DELETE($mID) {
         //alert("DELETE function");
-        $market_e = array_shift($market_e);
-        if (!isset($market_e)) {
+        $mID = array_shift($mID);
+        if (!isset($mID)) {
             http_response_code(400);
             $output = array();
             $output['status'] = 'error';
             $output['code'] = '5000';
-            $output['message'] = 'Delete Function: Market Not found';
+            $output['message'] = 'Delete Function: Market ID Not found';
             echo json_encode($output, JSON_UNESCAPED_UNICODE);
             exit;
         }
         
         require_once 'db.php';
-        $sql = "DELETE FROM market WHERE market_e='$market_e'";
+        $sql = "DELETE FROM market WHERE mID=$mID";
 
         try {
             $dbresult = $conn->query($sql);
             $output = array();
             $output['status'] = 'success';
-            $output['message'] = "Market $market_e successfully deleted";
+            $output['message'] = "Market ID $mID successfully deleted";
             echo json_encode($output, JSON_UNESCAPED_UNICODE);
             exit;
         } 

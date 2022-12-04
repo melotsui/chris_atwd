@@ -64,20 +64,19 @@
 					var resultArray = JSON.parse(serverData);
 					filteredMarket = resultArray;
 					var html = '';
-					var idx = 1;
 					for (item of resultArray) {
 						html += '<tr>';
-						html += '<td class="d-none d-md-table-cell">' + idx + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['mID'] + '</td>';
 						html += '<td class="d-none d-md-table-cell">' + item['Region_e'] + '</td>';
 						html += '<td class="d-none d-md-table-cell">' + item['District_e'] + '</td>';
 						html += '<td class="d-none d-md-table-cell">' + item['Market_e'] + '</td>';
 						html += '<td class="d-none d-md-table-cell">' + item['Address_e'] + '</td>';
 						html += '<td class="d-none d-md-table-cell">' + item['Business_Hours_e'] + '</td>';
 						html += '<td class="d-none d-md-table-cell">' + item['Contact_1'] + ' ' + item['Contact_2'] + '</td>';
-						html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;"><a href="" data-bs-toggle="modal" data-bs-target="#editModal" onclick="changeModalMode(' + "'view'" + ');clickEditIcon(' + "'" + item['Market_e'] + "'" + ');return false;">';
+						html += '<td class="d-none d-md-table-cell">' + item['Tenancy_Commodity_e'] + '</td>';
+						html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;"><a href="" data-bs-toggle="modal" data-bs-target="#editModal" onclick="changeModalMode(' + "'view'" + ');clickEditIcon(' + "'" + item['Market_e'] + "'" + ',' + "'" + item['Tenancy_Commodity_e'] + "'" + ');return false;">';
 						html += '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>';
 						html += '</a></div></td></tr>';
-						idx++;
 					}
 					document.getElementById('dataBody').innerHTML = html;
 				}
@@ -146,21 +145,20 @@
 					resultArray = JSON.parse(serverData);
 					filteredMarket = resultArray;
 					var html = '';
-					var idx = 1;
 					for (item of resultArray) {
 						html += '<tr>';
-						html += '<td class="d-none d-md-table-cell">' + idx + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['mID'] + '</td>';
 						html += '<td class="d-none d-md-table-cell">' + item['Region_e'] + '</td>';
 						html += '<td class="d-none d-md-table-cell">' + item['District_e'] + '</td>';
 						html += '<td class="d-none d-md-table-cell">' + item['Market_e'] + '</td>';
 						html += '<td class="d-none d-md-table-cell">' + item['Address_e'] + '</td>';
 						html += '<td class="d-none d-md-table-cell">' + item['Business_Hours_e'] + '</td>';
 						html += '<td class="d-none d-md-table-cell">' + item['Contact_1'] + ' ' + item['Contact_2'] + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['Tenancy_Commodity_e'] + '</td>';
 						html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;">';
-						html += '<a href="" data-bs-toggle="modal" data-bs-target="#editModal" onclick="changeModalMode(' + "'view'" + ');clickEditIcon(' + "'" + item['Market_e'] + "'" + ');return false;">';
+						html += '<a href="" data-bs-toggle="modal" data-bs-target="#editModal" onclick="changeModalMode(' + "'view'" + ');clickEditIcon(' + "'" + item['Market_e'] + "'" + ',' + "'" + item['Tenancy_Commodity_e'] + "'" + ');return false;">';
 						html += '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>';
 						html += '</a></div></td></tr>';
-						idx++;
 					}
 					document.getElementById('dataBody').innerHTML = html;
 				}
@@ -187,24 +185,22 @@
 					// displayArea.innerHTML = serverData;
 					var rs = JSON.parse(serverData);
 					var html = '';
-					var idx = 1;
 					console.log(rs.length + ' <=> ' + filteredMarket.length);
 					for (rsItem of rs) {
 						for (item of filteredMarket) {
-							if (item['Market_e'] == rsItem['Market_e']) {
+							if (item['Market_e'] == rsItem['Market_e'] && item['Tenancy_Commodity_e'] == document.getElementById('Tenancy_Commodity_e').value) {
 								html += '<tr>';
-								html += '<td class="d-none d-md-table-cell">' + idx + '</td>';
+								html += '<td class="d-none d-md-table-cell">' + item['mID'] + '</td>';
 								html += '<td class="d-none d-md-table-cell">' + item['Region_e'] + '</td>';
 								html += '<td class="d-none d-md-table-cell">' + item['District_e'] + '</td>';
 								html += '<td class="d-none d-md-table-cell">' + item['Market_e'] + '</td>';
 								html += '<td class="d-none d-md-table-cell">' + item['Address_e'] + '</td>';
 								html += '<td class="d-none d-md-table-cell">' + item['Business_Hours_e'] + '</td>';
 								html += '<td class="d-none d-md-table-cell">' + item['Contact_1'] + ' ' + item['Contact_2'] + '</td>';
-								html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;">';
-								html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;"><a href="" data-bs-toggle="modal" data-bs-target="#editModal" onclick="changeModalMode(' + "'view'" + ');clickEditIcon(' + "'" + item['Market_e'] + "'" + ');return false;">';
+								html += '<td class="d-none d-md-table-cell">' + item['Tenancy_Commodity_e'] + '</td>';
+								html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;"><a href="" data-bs-toggle="modal" data-bs-target="#editModal" onclick="changeModalMode(' + "'view'" + ');clickEditIcon(' + "'" + item['Market_e'] + "'" + ',' + "'" + item['Tenancy_Commodity_e'] + "'" + ');return false;">';
 								html += '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>';
 								html += '</a></div></td></tr>';
-								idx++;
 							}
 						}
 					}
@@ -218,18 +214,20 @@
 
 		// Delete Icon
 		var reqModalTC = new XMLHttpRequest();
-		function clickEditIcon(market_e) {
+		function clickEditIcon(market_e, tc_e) {
+			getMarketDetail(market_e, tc_e);
 
-			getMarketDetail(market_e);
-			var url = path + '/market/index.php/market/tc/market_e/' + market_e;
-			reqModalTC.open("GET", url, true);  // true=>asynchronous, false=>synchronous
-			reqModalTC.onreadystatechange = updateModalTCTable;
-			reqModalTC.send(null);
+			// var url = path + '/market/index.php/market/tc/market_e/' + market_e;
+			// reqModalTC.open("GET", url, true);  // true=>asynchronous, false=>synchronous
+			// reqModalTC.onreadystatechange = updateModalTCTable;
+			// reqModalTC.send(null);
 		}
 
-		function getMarketDetail(market_e) {
+		function getMarketDetail(market_e, tc_e) {
 			for (item of allMarketList) {
-				if (market_e == item['Market_e']) {
+				if (market_e == item['Market_e'] && tc_e == item['Tenancy_Commodity_e']) {
+					document.getElementById('modalmID').value = item['mID'];
+					console.log(document.getElementById('modalmID').value);
 					document.getElementById('modalName_e').value = item['Market_e'];
 					document.getElementById('modalName_c').value = item['Market_c'];
 					document.getElementById('modalRegion_e').value = item['Region_e'];
@@ -244,62 +242,68 @@
 					document.getElementById('google-map-iframe').src = 'https://maps.google.com/maps?q=' + document.getElementById('modalCoordinate').value + '&t=&z=13&ie=UTF8&iwloc=&output=embed';
 					document.getElementById('modalContact_1').value = item['Contact_1'];
 					document.getElementById('modalContact_2').value = item['Contact_2'];
+
+					document.getElementById('modalCheckBoxTC_e').value = item['Tenancy_Commodity_e'];
+					document.getElementById('modalCheckBoxTC_c').value = item['Tenancy_Commodity_c'];
+					document.getElementById('modalNosStall').value = item['nos_stall'];
+
 				}
 			}
 		}
 
-		function updateModalTCTable() {
-			if (reqModalTC.readyState == 4) {
-				if (reqModalTC.status == 200) {
-					console.log(reqModalTC.status);
-					var serverData = reqModalTC.responseText;
-					// displayArea.innerHTML = serverData;
-					var rs = JSON.parse(serverData);
-					var modalTbBody = '';
-					for(allItems of allTC){
-						var match = false;
-						var nos_stall = 0;
-						modalTbBody += '<tr>';
-						for(item of rs){
-							if(allItems['Tenancy_Commodity_e'] == item['Tenancy_Commodity_e']){
-								match = true;
-								nos_stall = item['nos_stall'];
-							}
-						}
-						if(match){
-							modalTbBody += '<td><input class="form-check-input tcCheckboxes" type="checkbox" value="' + allItems['Tenancy_Commodity_e'] + '" checked></td>'
-							modalTbBody += '<td><label class="form-check-label" for="modalCheckBoxTC_e">' + allItems['Tenancy_Commodity_e'] + '</label></td>'
-							modalTbBody += '<td><label class="form-check-label" for="modalCheckBoxTC_c">' + allItems['Tenancy_Commodity_c'] + '</label></td>';
-							modalTbBody += '<td><input type="number" class="form-control nos_stall" value="' + nos_stall + '" /></td>'
+		// function updateModalTCTable() {
+		// 	if (reqModalTC.readyState == 4) {
+		// 		if (reqModalTC.status == 200) {
+		// 			console.log(reqModalTC.status);
+		// 			var serverData = reqModalTC.responseText;
+		// 			// displayArea.innerHTML = serverData;
+		// 			var rs = JSON.parse(serverData);
+		// 			var modalTbBody = '';
+		// 			for (allItems of allTC) {
+		// 				var match = false;
+		// 				var nos_stall = 0;
+		// 				modalTbBody += '<tr>';
+		// 				for (item of rs) {
+		// 					if (allItems['Tenancy_Commodity_e'] == item['Tenancy_Commodity_e']) {
+		// 						match = true;
+		// 						nos_stall = item['nos_stall'];
+		// 					}
+		// 				}
+		// 				if (match) {
+		// 					modalTbBody += '<td><input class="form-check-input tcCheckboxes" type="checkbox" value="' + allItems['Tenancy_Commodity_e'] + '" checked></td>'
+		// 					modalTbBody += '<td><label class="form-check-label" for="modalCheckBoxTC_e">' + allItems['Tenancy_Commodity_e'] + '</label></td>'
+		// 					modalTbBody += '<td><label class="form-check-label" for="modalCheckBoxTC_c">' + allItems['Tenancy_Commodity_c'] + '</label></td>';
+		// 					modalTbBody += '<td><input type="number" class="form-control modalTC" value="' + nos_stall + '" /></td>'
 
-						} else {
-							modalTbBody += '<td><input class="form-check-input tcCheckboxes" type="checkbox" value="' + allItems['Tenancy_Commodity_e'] + '"></td>'
-							modalTbBody += '<td><label class="form-check-label" for="modalCheckBoxTC_e">' + allItems['Tenancy_Commodity_e'] + '</label></td>'
-							modalTbBody += '<td><label class="form-check-label" for="modalCheckBoxTC_c">' + allItems['Tenancy_Commodity_c'] + '</label></td>';
-							modalTbBody += '<td><input type="number" class="form-control nos_stall" value="' + nos_stall + '" /></td>'
+		// 				} else {
+		// 					modalTbBody += '<td><input class="form-check-input tcCheckboxes" type="checkbox" value="' + allItems['Tenancy_Commodity_e'] + '"></td>'
+		// 					modalTbBody += '<td><label class="form-check-label" for="modalCheckBoxTC_e">' + allItems['Tenancy_Commodity_e'] + '</label></td>'
+		// 					modalTbBody += '<td><label class="form-check-label" for="modalCheckBoxTC_c">' + allItems['Tenancy_Commodity_c'] + '</label></td>';
+		// 					modalTbBody += '<td><input type="number" class="form-control modalTC" value="' + nos_stall + '" /></td>'
 
-						}
-						modalTbBody += '</tr>';
-					}
-					// for (item of rs) {
-					// 	modalTbBody += '<tr>';
-					// 	modalTbBody += '<td><input class="form-check-input" type="checkbox" value="' + item['Tenancy_Commodity_e'] + '" checked></td>'
-					// 	modalTbBody += '<td><label class="form-check-label" for="modalCheckBoxTC_e">' + item['Tenancy_Commodity_e'] + '</label></td>'
-					// 	modalTbBody += '<td><label class="form-check-label" for="modalCheckBoxTC_c">' + item['Tenancy_Commodity_c'] + '</label></td>';
-					// 	modalTbBody += '<td><label class="form-check-label" for="modalNosStall">' + item['nos_stall'] + '</label></td>'
-					// 	modalTbBody += '</tr>';
-					// }
-					document.getElementById('modalTbBody').innerHTML = modalTbBody;
-					console.log(document.getElementsByClassName('form-control nos_stall').length);
-					for(item of document.getElementsByClassName('form-check-input tcCheckboxes')){
-						item.disabled = 'disabled';
-					}
-					for (item of document.getElementsByClassName('form-control nos_stall')) {
-						item.disabled = 'disabled';
-					}
-				}
-			}
-		}
+		// 				}
+		// 				modalTbBody += '</tr>';
+		// 			}
+		// 			// for (item of rs) {
+		// 			// 	modalTbBody += '<tr>';
+		// 			// 	modalTbBody += '<td><input class="form-check-input" type="checkbox" value="' + item['Tenancy_Commodity_e'] + '" checked></td>'
+		// 			// 	modalTbBody += '<td><label class="form-check-label" for="modalCheckBoxTC_e">' + item['Tenancy_Commodity_e'] + '</label></td>'
+		// 			// 	modalTbBody += '<td><label class="form-check-label" for="modalCheckBoxTC_c">' + item['Tenancy_Commodity_c'] + '</label></td>';
+		// 			// 	modalTbBody += '<td><label class="form-check-label" for="modalNosStall">' + item['nos_stall'] + '</label></td>'
+		// 			// 	modalTbBody += '</tr>';
+		// 			// }
+		// 			document.getElementById('modalTbBody').innerHTML = modalTbBody;
+		// 			console.log(document.getElementsByClassName('form-control modalTC').length);
+		// 			for (item of document.getElementsByClassName('form-check-input tcCheckboxes')) {
+		// 				item.disabled = 'disabled';
+		// 			}
+		// 			for (item of document.getElementsByClassName('form-control modalTC')) {
+		// 				item.disabled = 'disabled';
+		// 			}
+		// 		}
+		// 	}
+		// }
+
 		// End Delete Icon
 
 		// Modal Icon
@@ -307,27 +311,50 @@
 			changeModalMode('edit');
 		}
 
+		function clickModalAddIcon(){
+			changeModalMode('edit');
+			document.getElementById('modalmID').value = '';
+			document.getElementById('modalName_e').value = '';
+			document.getElementById('modalName_c').value = '';
+			document.getElementById('modalRegion_e').value = '';
+			document.getElementById('modalRegion_c').value = '';
+			document.getElementById('modalDistrict_e').value = '';
+			document.getElementById('modalDistrict_c').value = '';
+			document.getElementById('modalAddress_e').value = '';
+			document.getElementById('modalAddress_c').value = '';
+			document.getElementById('modalBH_e').value = '';
+			document.getElementById('modalBH_c').value = '';
+			document.getElementById('modalCoordinate').value = '';
+			document.getElementById('modalContact_1').value = '';
+			document.getElementById('modalContact_2').value = '';
+
+			document.getElementById('modalCheckBoxTC_e').value = '';
+			document.getElementById('modalCheckBoxTC_c').value = '';
+			document.getElementById('modalNosStall').value = '';
+			document.getElementById('modalUpdateButton').style.display = 'none';
+		}
+
 		function changeModalMode(mode) {
 			if (mode == 'edit') {
 				document.getElementById('modalName_e').readOnly = false;
 				document.getElementById('modalName_c').readOnly = false;
-				// document.getElementById('modalRegion_e').value = item['Region_e'];
-				// document.getElementById('modalRegion_c').value = item['Region_c'];
-				// document.getElementById('modalDistrict_e').value = item['District_e'];
-				// document.getElementById('modalDistrict_c').value = item['District_c'];
+				document.getElementById('modalRegion_e').readOnly = false;
+				document.getElementById('modalRegion_c').readOnly = false;
+				document.getElementById('modalDistrict_e').readOnly = false;
+				document.getElementById('modalDistrict_c').readOnly = false;
 				document.getElementById('modalAddress_e').readOnly = false;
 				document.getElementById('modalAddress_c').readOnly = false;
 				document.getElementById('modalBH_e').readOnly = false;
 				document.getElementById('modalBH_c').readOnly = false;
 				document.getElementById('map-container-google-2').style.display = 'none';
 				document.getElementById('modalDivCoordinate').style.display = 'block';
+				document.getElementById('modalAddButton').style.display = 'block';
+				document.getElementById('modalUpdateButton').style.display = 'block';
+				document.getElementById('modalDeleteButton').style.display = 'none';
 				document.getElementById('modalCoordinate').readOnly = false;
 				document.getElementById('modalContact_1').readOnly = false;
 				document.getElementById('modalContact_2').readOnly = false;
-				for (item of document.getElementsByClassName('form-check-input tcCheckboxes')) {
-					item.disabled = '';
-				}
-				for (item of document.getElementsByClassName('form-control nos_stall')) {
+				for (item of document.getElementsByClassName('form-control modalTC')) {
 					item.disabled = '';
 				}
 
@@ -335,23 +362,23 @@
 			if (mode == 'view') {
 				document.getElementById('modalName_e').readOnly = true;
 				document.getElementById('modalName_c').readOnly = true;
-				// document.getElementById('modalRegion_e').value = item['Region_e'];
-				// document.getElementById('modalRegion_c').value = item['Region_c'];
-				// document.getElementById('modalDistrict_e').value = item['District_e'];
-				// document.getElementById('modalDistrict_c').value = item['District_c'];
+				document.getElementById('modalRegion_e').readOnly = true;
+				document.getElementById('modalRegion_c').readOnly = true;
+				document.getElementById('modalDistrict_e').readOnly = true;
+				document.getElementById('modalDistrict_c').readOnly = true;
 				document.getElementById('modalAddress_e').readOnly = true;
 				document.getElementById('modalAddress_c').readOnly = true;
 				document.getElementById('modalBH_e').readOnly = true;
 				document.getElementById('modalBH_c').readOnly = true;
 				document.getElementById('map-container-google-2').style.display = 'block';
 				document.getElementById('modalDivCoordinate').style.display = 'none';
+				document.getElementById('modalAddButton').style.display = 'none';
+				document.getElementById('modalUpdateButton').style.display = 'none';
+				document.getElementById('modalDeleteButton').style.display = 'block';
 				document.getElementById('modalCoordinate').readOnly = true;
 				document.getElementById('modalContact_1').readOnly = true;
 				document.getElementById('modalContact_2').readOnly = true;
-				for (item of document.getElementsByClassName('form-check-input tcCheckboxes')) {
-					item.disabled = 'disabled';
-				}
-				for (item of document.getElementsByClassName('form-control nos_stall')) {
+				for (item of document.getElementsByClassName('form-control modalTC')) {
 					item.disabled = 'disabled';
 				}
 			}
@@ -360,8 +387,9 @@
 		var reqDelete = new XMLHttpRequest();
 		// go delete
 		function goDelete() {
-			var market_e = document.getElementById('modalName_e').value;
-			var url = path + '/market/index.php/market/' + market_e;
+			var mID = document.getElementById('modalmID').value;
+			console.log(mID);
+			var url = path + '/market/index.php/market/' + mID;
 			reqDelete.open("delete", url, true);  // true=>asynchronous, false=>synchronous
 			reqDelete.onreadystatechange = deleteMarket;
 			reqDelete.send(null);
@@ -370,6 +398,7 @@
 		function deleteMarket() {
 			if (reqDelete.readyState == 4) {
 				if (reqDelete.status == 200) {
+					console.log(reqDelete.responseText);
 					var serverData = reqDelete.responseText;
 					var rs = JSON.parse(serverData);
 					if (rs['status'] == 'success') {
@@ -386,12 +415,132 @@
 						} else {
 							clickTC();
 						}
+						listMarket();
+						loadTC();
 						document.getElementById('btnModalCancel').click();
 					}
 				}
 			}
 		}
 		// end go delete
+		
+		// go update
+		var reqDelete = new XMLHttpRequest();
+		function goUpdate() {
+			var mID = document.getElementById('modalmID').value;
+			console.log(mID);
+			var url = path + '/market/index.php/market';
+			var body = {
+				mID : mID,
+				Market_e : document.getElementById('modalName_e').value,
+				Market_c: document.getElementById('modalName_c').value,
+				Region_e: document.getElementById('modalRegion_e').value,
+				Region_c: document.getElementById('modalRegion_c').value,
+				District_e: document.getElementById('modalDistrict_e').value,
+				District_c: document.getElementById('modalDistrict_c').value,
+				Address_e: document.getElementById('modalAddress_e').value,
+				Address_c: document.getElementById('modalAddress_c').value,
+				Business_Hours_e: document.getElementById('modalBH_e').value,
+				Business_Hours_c: document.getElementById('modalBH_c').value,
+				Coordinate: document.getElementById('modalCoordinate').value,
+				Contact_1: document.getElementById('modalContact_1').value,
+				Contact_2: document.getElementById('modalContact_2').value,
+				Tenancy_Commodity_e: document.getElementById('modalCheckBoxTC_e').value,
+				Tenancy_Commodity_c: document.getElementById('modalCheckBoxTC_c').value,
+				nos_stall: document.getElementById('modalNosStall').value
+			}
+			reqDelete.open("put", url, true);  // true=>asynchronous, false=>synchronous
+			reqDelete.onreadystatechange = updateMarket;
+			reqDelete.send(JSON.stringify(body));
+		}
+
+		function updateMarket() {
+			if (reqDelete.readyState == 4) {
+				if (reqDelete.status == 200) {
+					console.log(reqDelete.responseText);
+					var serverData = reqDelete.responseText;
+					var rs = JSON.parse(serverData);
+					if (rs['status'] == 'success') {
+						var search_tc = document.getElementById('Tenancy_Commodity_e').value;
+						var search_region = document.getElementById("Region_e").value;
+						var search_district = document.getElementById('District_e').value;
+						console.log(Region_e + ', ' + search_district + ', ' + search_tc);
+						if (search_tc == '') {
+							if (search_district == '') {
+								clickRegion();
+							} else {
+								clickDistrict();
+							}
+						} else {
+							clickTC();
+						}
+						listMarket();
+						loadTC();
+						document.getElementById('btnModalCancel').click();
+					}
+				}
+			}
+		}
+		// end go update
+		
+		// goAdd
+		var reqDelete = new XMLHttpRequest();
+		function goAdd() {
+			var mID = document.getElementById('modalmID').value;
+			console.log(mID);
+			var url = path + '/market/index.php/market';
+			var body = {
+				mID: mID,
+				Market_e: document.getElementById('modalName_e').value,
+				Market_c: document.getElementById('modalName_c').value,
+				Region_e: document.getElementById('modalRegion_e').value,
+				Region_c: document.getElementById('modalRegion_c').value,
+				District_e: document.getElementById('modalDistrict_e').value,
+				District_c: document.getElementById('modalDistrict_c').value,
+				Address_e: document.getElementById('modalAddress_e').value,
+				Address_c: document.getElementById('modalAddress_c').value,
+				Business_Hours_e: document.getElementById('modalBH_e').value,
+				Business_Hours_c: document.getElementById('modalBH_c').value,
+				Coordinate: document.getElementById('modalCoordinate').value,
+				Contact_1: document.getElementById('modalContact_1').value,
+				Contact_2: document.getElementById('modalContact_2').value,
+				Tenancy_Commodity_e: document.getElementById('modalCheckBoxTC_e').value,
+				Tenancy_Commodity_c: document.getElementById('modalCheckBoxTC_c').value,
+				nos_stall: document.getElementById('modalNosStall').value
+			}
+			reqDelete.open("POST", url, true);  // true=>asynchronous, false=>synchronous
+			reqDelete.onreadystatechange = insertMarket;
+			reqDelete.send(JSON.stringify(body));
+		}
+
+		function insertMarket() {
+			if (reqDelete.readyState == 4) {
+				if (reqDelete.status == 200) {
+					console.log(reqDelete.responseText);
+					var serverData = reqDelete.responseText;
+					var rs = JSON.parse(serverData);
+					if (rs['status'] == 'success') {
+						var search_tc = document.getElementById('Tenancy_Commodity_e').value;
+						var search_region = document.getElementById("Region_e").value;
+						var search_district = document.getElementById('District_e').value;
+						console.log(Region_e + ', ' + search_district + ', ' + search_tc);
+						if (search_tc == '') {
+							if (search_district == '') {
+								clickRegion();
+							} else {
+								clickDistrict();
+							}
+						} else {
+							clickTC();
+						}
+						listMarket();
+						loadTC();
+						document.getElementById('btnModalCancel').click();
+					}
+				}
+			}
+		}
+		// end goAdd
 	</script>
 </head>
 
@@ -476,10 +625,18 @@
 
 			<main class="content">
 				<div class="container-fluid p-0">
-					<h1 class="h3 mb-3"><strong>Market</strong> List</h1>
+					<h1 class="h3 mb-3"><strong>Market</strong>List
+						<a href="" data-bs-toggle="modal" data-bs-target="#editModal" onclick="clickModalAddIcon();return false;">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+								stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+								class="feather feather-plus-square align-middle me-2">
+								<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+								<line x1="12" y1="8" x2="12" y2="16"></line>
+								<line x1="8" y1="12" x2="16" y2="12"></line>
+							</svg>
+						</a>
+					</h1>
 				</div>
-
-
 				<div class="row">
 					<div class="col-12 col-lg-12 col-xxl-12	 d-flex">
 						<div class="card flex-fill">
@@ -490,13 +647,14 @@
 							<table class="table table-hover my-0" id="dataTable">
 								<thead>
 									<tr>
-										<th class="d-none d-md-table-cell">#</th>
+										<th class="d-none d-md-table-cell">ID</th>
 										<th class="d-none d-md-table-cell">Region</th>
 										<th class="d-none d-md-table-cell">District</th>
 										<th class="d-none d-md-table-cell">Market</th>
 										<th class="d-none d-md-table-cell">Address</th>
 										<th class="d-none d-md-table-cell">Business Hours</th>
 										<th class="d-none d-md-table-cell">Contact</th>
+										<th class="d-none d-md-table-cell">Commodity</th>
 										<th class="d-none d-md-table-cell">Action</th>
 									</tr>
 								</thead>
@@ -561,6 +719,10 @@
 								<div class="col-lg-6">
 									<!-- col-lg-6 -->
 									<div class="row g-3">
+										<div class="col-12" style="display: none;">
+											<label for="modalmID" class="form-label">Market ID</label>
+											<input type="text" class="form-control" id="modalmID" readonly>
+										</div>
 										<div class="col-12">
 											<label for="modalName_e" class="form-label">Market Name</label>
 											<input type="text" class="form-control" id="modalName_e" readonly>
@@ -570,7 +732,7 @@
 											<input type="text" class="form-control" id="modalRegion_e" readonly>
 										</div>
 										<div class="col-12">
-											<label for="modalRegion_e" class="form-label">District</label>
+											<label for="modalDistrict_e" class="form-label">District</label>
 											<input type="text" class="form-control" id="modalDistrict_e" readonly>
 										</div>
 										<div class="col-12">
@@ -578,7 +740,7 @@
 											<input type="text" class="form-control" id="modalAddress_e" readonly>
 										</div>
 										<div class="col-12">
-											<label for="modalAddress_e" class="form-label">Business Hours</label>
+											<label for="modalBH_e" class="form-label">Business Hours</label>
 											<input type="text" class="form-control" id="modalBH_e" readonly>
 										</div>
 										<div class="col-12">
@@ -639,15 +801,30 @@
 
 									<table class="table table-hover my-0">
 										<thead>
-											<th scope="col"></th>
+											<!-- <th scope="col"></th> -->
 											<!-- <th scope="col"><div class="icon"><i class="bi bi-plus-circle"></i></div></th> -->
 											<th scope="col">Tenancy Commodity</th>
-											<th scope="col"></th>
+											<th scope="col">商品</th>
 											<th scope="col">Nos Stall</th>
 										</thead>
 										<tbody id="modalTbBody">
 											<tr>
-												<td><input class="form-check-input tcCheckboxes" type="checkbox" id="modalCheckBoxTC_e" checked></td>
+												<!-- <td><input class="form-check-input tcCheckboxes" type="checkbox"
+														id="modalCheckBoxTC_e" checked></td> -->
+												<td>
+													<input type="text" class="form-control modalTC"
+														id="modalCheckBoxTC_e" value="999" />
+												</td>
+												<td>
+													<input type="text" class="form-control modalTC"
+														id="modalCheckBoxTC_c" value="999" />
+												</td>
+												<td>
+													<input type="number" class="form-control modalTC" id="modalNosStall"
+														value="999" />
+												</td>
+											</tr>
+											<!-- <tr>
 												<td><label class="form-check-label" for="modalCheckBoxTC_e">modal
 														CheckBox
 														TC_e</label></td>
@@ -657,7 +834,6 @@
 												<td><label class="form-check-label" for="modalNosStall">999</label></td>
 											</tr>
 											<tr>
-												<td><input class="form-check-input tcCheckboxes" type="checkbox" id="modalCheckBoxTC_e" checked></td>
 												<td><label class="form-check-label" for="modalCheckBoxTC_e">modal
 														CheckBox
 														TC_e</label></td>
@@ -665,27 +841,7 @@
 														CheckBox
 														TC_c</label></td>
 												<td><label class="form-check-label" for="modalNosStall">999</label></td>
-											</tr>
-											<tr>
-												<td><input class="form-check-input tcCheckboxes" type="checkbox" id="modalCheckBoxTC_e" checked></td>
-												<td><label class="form-check-label" for="modalCheckBoxTC_e">modal
-														CheckBox
-														TC_e</label></td>
-												<td><label class="form-check-label" for="modalCheckBoxTC_c">modal
-														CheckBox
-														TC_c</label></td>
-												<td><label class="form-check-label" for="modalNosStall">999</label></td>
-											</tr>
-											<tr>
-												<td><input class="form-check-input tcCheckboxes" type="checkbox" id="modalCheckBoxTC_e" checked></td>
-												<td><label class="form-check-label" for="modalCheckBoxTC_e">modal
-														CheckBox
-														TC_e</label></td>
-												<td><label class="form-check-label" for="modalCheckBoxTC_c">modal
-														CheckBox
-														TC_c</label></td>
-												<td><label class="form-check-label" for="modalNosStall">999</label></td>
-											</tr>
+											</tr> -->
 										</tbody>
 									</table>
 								</div>
@@ -695,11 +851,13 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
 									id="btnModalCancel">Cancel</button>
-								<!-- <button type="button" class="btn btn-primary" id="modalAddButton" onclick="goAdd()">Add</button>
-            <button type="button" class="btn btn-primary" id="modalUpdateButton" onclick="goUpdate()">Update</button> -->
-								<button type="button" class="btn btn-primary" id="modalDeleteButton" onclick="goDelete()">Delete</button>
+								<button type="button" class="btn btn-primary" id="modalAddButton"
+									onclick="goAdd()">Add</button>
+								<button type="button" class="btn btn-primary" id="modalDeleteButton"
+									onclick="goDelete()">Delete</button>
 								<!-- <button type="button" class="btn btn-primary" id="modalDeleteButton" onclick="goDelete()">Delete</button> -->
-								<button type="button" class="btn btn-primary" id="modalUpdateButton" onclick="goUpdate()">Delete</button>
+								<button type="button" class="btn btn-primary" id="modalUpdateButton"
+									onclick="goUpdate()">Update</button>
 							</div>
 						</div>
 					</div>
@@ -743,20 +901,19 @@
 					allMarketList = rsArray;
 					filteredMarket = allMarketList;
 					var html = '';
-					var idx = 1;
 					for (item of rsArray) {
 						html += '<tr>';
-						html += '<td class="d-none d-md-table-cell">' + idx + '</td>';
+						html += '<td class="d-none d-md-table-cell">' + item['mID'] + '</td>';
 						html += '<td class="d-none d-md-table-cell">' + item['Region_e'] + '</td>';
 						html += '<td class="d-none d-md-table-cell">' + item['District_e'] + '</td>';
 						html += '<td class="d-none d-md-table-cell">' + item['Market_e'] + '</td>';
 						html += '<td class="d-none d-md-table-cell">' + item['Address_e'] + '</td>';
 						html += '<td class="d-none d-md-table-cell">' + item['Business_Hours_e'] + '</td>';
 						html += '<td class="d-none d-md-table-cell">' + item['Contact_1'] + ' ' + item['Contact_2'] + '</td>';
-						html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;"><a href="" data-bs-toggle="modal" data-bs-target="#editModal" onclick="changeModalMode(' + "'view'" + ');clickEditIcon(' + "'" + item['Market_e'] + "'" + ');return false;">';
+						html += '<td class="d-none d-md-table-cell">' + item['Tenancy_Commodity_e'] + '</td>';
+						html += '<td class="d-none d-md-table-cell"><div class="mb-2" style="text-align: center;"><a href="" data-bs-toggle="modal" data-bs-target="#editModal" onclick="changeModalMode(' + "'view'" + ');clickEditIcon(' + "'" + item['Market_e'] + "'" + ',' + "'" + item['Tenancy_Commodity_e'] + "'" + ');return false;">';
 						html += '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>';
 						html += '</a></div></td></tr>';
-						idx++;
 					}
 					document.getElementById('dataBody').innerHTML = html;
 					// console.log(html);

@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `market`
 --
 
-CREATE TABLE `market` (
+CREATE TABLE IF NOT EXISTS `market`  (
   `mID` int(11) NOT NULL,
   `Region_e` varchar(20) NOT NULL,
   `Region_c` varchar(255) CHARACTER SET big5 NOT NULL,
@@ -893,7 +893,7 @@ INSERT INTO `market` (`mID`, `Region_e`, `Region_c`, `District_e`, `District_c`,
 -- Table structure for table `persons`
 --
 
-CREATE TABLE `persons` (
+CREATE TABLE IF NOT EXISTS `persons` (
   `Personid` int(11) NOT NULL,
   `LastName` varchar(255) NOT NULL,
   `FirstName` varchar(255) DEFAULT NULL,
