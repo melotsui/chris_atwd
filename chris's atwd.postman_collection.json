@@ -1,0 +1,549 @@
+{
+	"info": {
+		"_postman_id": "0c443521-9ef7-4281-8f52-d3b742b7954f",
+		"name": "chris's atwd",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "error",
+			"item": [
+				{
+					"name": "3001: update market",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mID\": \"9999\",\r\n    \"Market_e\": \"NORTH POINT MARKET\",\r\n    \"Market_c\": \"北角街市\",\r\n    \"Region_e\": \"Hong Kong & Islands\",\r\n    \"Region_c\": \"香港及離島\",\r\n    \"District_e\": \"Eastern\",\r\n    \"District_c\": \"東區\",\r\n    \"Address_e\": \"160 TSAT TSZ MUI ROAD, NORTH POINT, HK\",\r\n    \"Address_c\": \"香港北角七姊妹道160號\",\r\n    \"Business_Hours_e\": \"6:00 a.m. to 8:00 p.m.\",\r\n    \"Business_Hours_c\": \"上午6時正至晚上8時正\",\r\n    \"Coordinate\": \"22.29123,114.20548\",\r\n    \"Contact_1\": \"25641381\",\r\n    \"Contact_2\": \"25634340\",\r\n    \"Tenancy_Commodity_e\": \"Food Related Wet Goods\",\r\n    \"Tenancy_Commodity_c\": \"食物類濕貨\",\r\n    \"nos_stall\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/market/index.php/market",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"market",
+								"index.php",
+								"market"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3002: update market",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mID\": \"\",\r\n    \"Market_e\": \"NORTH POINT MARKET\",\r\n    \"Market_c\": \"北角街市\",\r\n    \"Region_e\": \"Hong Kong & Islands\",\r\n    \"Region_c\": \"香港及離島\",\r\n    \"District_e\": \"Eastern\",\r\n    \"District_c\": \"東區\",\r\n    \"Address_e\": \"160 TSAT TSZ MUI ROAD, NORTH POINT, HK\",\r\n    \"Address_c\": \"香港北角七姊妹道160號\",\r\n    \"Business_Hours_e\": \"6:00 a.m. to 8:00 p.m.\",\r\n    \"Business_Hours_c\": \"上午6時正至晚上8時正\",\r\n    \"Coordinate\": \"22.29123,114.20548\",\r\n    \"Contact_1\": \"25641381\",\r\n    \"Contact_2\": \"25634340\",\r\n    \"Tenancy_Commodity_e\": \"Food Related Wet Goods\",\r\n    \"Tenancy_Commodity_c\": \"食物類濕貨\",\r\n    \"nos_stall\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/market/index.php/market",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"market",
+								"index.php",
+								"market"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3003: update market",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mID\": \"123\",\r\n    \"Market_e\": \"\",\r\n    \"Market_c\": \"北角街市\",\r\n    \"Region_e\": \"Hong Kong & Islands\",\r\n    \"Region_c\": \"香港及離島\",\r\n    \"District_e\": \"Eastern\",\r\n    \"District_c\": \"東區\",\r\n    \"Address_e\": \"160 TSAT TSZ MUI ROAD, NORTH POINT, HK\",\r\n    \"Address_c\": \"香港北角七姊妹道160號\",\r\n    \"Business_Hours_e\": \"6:00 a.m. to 8:00 p.m.\",\r\n    \"Business_Hours_c\": \"上午6時正至晚上8時正\",\r\n    \"Coordinate\": \"22.29123,114.20548\",\r\n    \"Contact_1\": \"25641381\",\r\n    \"Contact_2\": \"25634340\",\r\n    \"Tenancy_Commodity_e\": \"Food Related Wet Goods\",\r\n    \"Tenancy_Commodity_c\": \"食物類濕貨\",\r\n    \"nos_stall\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/market/index.php/market",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"market",
+								"index.php",
+								"market"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4001: delete market",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/market/index.php/market/9999",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"market",
+								"index.php",
+								"market",
+								"9999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "999: invalid api",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/market/index.php/market/test",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"market",
+								"index.php",
+								"market",
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1001: Region does not exist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/market/index.php/market/field/region/err",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"market",
+								"index.php",
+								"market",
+								"field",
+								"region",
+								"err"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1002: get tc by market name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/market/index.php/market/tc/market_e/",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"market",
+								"index.php",
+								"market",
+								"tc",
+								"market_e",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1003: get tc by market name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/market/index.php/market/tc/market_e/err",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"market",
+								"index.php",
+								"market",
+								"tc",
+								"market_e",
+								"err"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1004: get market detail by name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/market/index.php/market/Market_e",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"market",
+								"index.php",
+								"market",
+								"Market_e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1005: search market by district",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/market/index.php/market/District_e/",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"market",
+								"index.php",
+								"market",
+								"District_e",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1006: search market by region",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/market/index.php/market/Region_e/",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"market",
+								"index.php",
+								"market",
+								"Region_e",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1007: search market by tc",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/market/index.php/market/filter/tc/",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"market",
+								"index.php",
+								"market",
+								"filter",
+								"tc",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "list all market",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/market/index.php/market/all",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"market",
+						"index.php",
+						"market",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get field - region",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/market/index.php/market/field/region",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"market",
+						"index.php",
+						"market",
+						"field",
+						"region"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get field - district",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/market/index.php/market/field/region/kowloon",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"market",
+						"index.php",
+						"market",
+						"field",
+						"region",
+						"kowloon"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get field - tc",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/market/index.php/market/field/tc",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"market",
+						"index.php",
+						"market",
+						"field",
+						"tc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get tc by market name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/market/index.php/market/tc/market_e/NORTH POINT MARKET",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"market",
+						"index.php",
+						"market",
+						"tc",
+						"market_e",
+						"NORTH POINT MARKET"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete market by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/market/index.php/market/12",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"market",
+						"index.php",
+						"market",
+						"12"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update market",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"mID\": \"12\",\r\n    \"Market_e\": \"NORTH POINT MARKET\",\r\n    \"Market_c\": \"北角街市\",\r\n    \"Region_e\": \"Hong Kong & Islands\",\r\n    \"Region_c\": \"香港及離島\",\r\n    \"District_e\": \"Eastern\",\r\n    \"District_c\": \"東區\",\r\n    \"Address_e\": \"160 TSAT TSZ MUI ROAD, NORTH POINT, HK\",\r\n    \"Address_c\": \"香港北角七姊妹道160號\",\r\n    \"Business_Hours_e\": \"6:00 a.m. to 8:00 p.m.\",\r\n    \"Business_Hours_c\": \"上午6時正至晚上8時正\",\r\n    \"Coordinate\": \"22.29123,114.20548\",\r\n    \"Contact_1\": \"25641381\",\r\n    \"Contact_2\": \"25634340\",\r\n    \"Tenancy_Commodity_e\": \"Food Related Wet Goods\",\r\n    \"Tenancy_Commodity_c\": \"食物類濕貨\",\r\n    \"nos_stall\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/market/index.php/market",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"market",
+						"index.php",
+						"market"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get tc info by market name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/market/index.php/market/tc/market_e/NORTH POINT MARKET",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"market",
+						"index.php",
+						"market",
+						"tc",
+						"market_e",
+						"NORTH POINT MARKET"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get market detail by market name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/market/index.php/market/Market_e/NORTH POINT MARKET",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"market",
+						"index.php",
+						"market",
+						"Market_e",
+						"NORTH POINT MARKET"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search market by region",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/market/index.php/market/Region_e/hong kong",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"market",
+						"index.php",
+						"market",
+						"Region_e",
+						"hong kong"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search market by tc",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/market/index.php/market/filter/tc/fish",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"market",
+						"index.php",
+						"market",
+						"filter",
+						"tc",
+						"fish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search market by district",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/market/index.php/market/District_e/kowloon",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"market",
+						"index.php",
+						"market",
+						"District_e",
+						"kowloon"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

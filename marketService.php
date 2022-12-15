@@ -34,24 +34,55 @@ class MarketService {
             if($field == 'region'){ // 127.0.0.1/market/index.php/market/field/region/Kowloon
                 $region = array_shift($parameters);
                 $output = array();
-                $sql = "SELECT DISTINCT District_e FROM market m WHERE Region_e = '$region';";
-                try {
-                    $dbresult = $conn->query($sql);
-                    // successfully retrieved the records
-                    $output = array();
-                    while ($row = $dbresult->fetch_assoc()) {
-                        $output[] = $row;
+                if($region == ''){
+                    $sql = "SELECT DISTINCT Region_e FROM market m;";
+                    try {
+                        $dbresult = $conn->query($sql);
+                        // successfully retrieved the records
+                        $output = array();
+                        while ($row = $dbresult->fetch_assoc()) {
+                            $output[] = $row;
+                        }
+                        echo json_encode($output, JSON_UNESCAPED_UNICODE);
+                        exit;
+                    } 
+                    catch (Exception $e) {
+                        $output = array();
+                        $output['status'] = 'error';
+                        $output['code'] = '1000';
+                        $output['message'] = "SQL execution failure" ;
+                        echo json_encode($output, JSON_UNESCAPED_UNICODE);
+                        exit;
                     }
-                    echo json_encode($output, JSON_UNESCAPED_UNICODE);
-                    exit;
-                } 
-                catch (Exception $e) {
-                    $output = array();
-                    $output['status'] = 'error';
-                    $output['code'] = '1000';
-                    $output['message'] = "Region $region does not exist" ;
-                    echo json_encode($output, JSON_UNESCAPED_UNICODE);
-                    exit;
+                } else {
+                    $sql = "SELECT DISTINCT District_e FROM market m WHERE Region_e = '$region';";
+                    try {
+                        $dbresult = $conn->query($sql);
+                        // successfully retrieved the records
+                        $output = array();
+                        while ($row = $dbresult->fetch_assoc()) {
+                            $output[] = $row;
+                        }
+                        if(count($output)>0){
+                            echo json_encode($output, JSON_UNESCAPED_UNICODE);
+                        } else {
+                            $output = array();
+                            $output['status'] = 'error';
+                            $output['code'] = '1001';
+                            $output['message'] = "Region '$region' does not exist" ;
+                            echo json_encode($output, JSON_UNESCAPED_UNICODE);
+                        }
+                        exit;
+                    } 
+                    catch (Exception $e) {
+                        $output = array();
+                        $output['status'] = 'error';
+                        $output['code'] = '1000';
+                        $output['message'] = "SQL execution failure" ;
+                        echo json_encode($output, JSON_UNESCAPED_UNICODE);
+                        exit;
+                    }
+
                 }
             }
             // if($field == 'district'){
@@ -94,8 +125,8 @@ class MarketService {
                 catch (Exception $e) {
                     $output = array();
                     $output['status'] = 'error';
-                    $output['code'] = '999';
-                    $output['message'] = "Region $region does not exist" ;
+                    $output['code'] = '1000';
+                    $output['message'] = "SQL execution failure" ;
                     echo json_encode($output, JSON_UNESCAPED_UNICODE);
                     exit;
                 }
@@ -104,11 +135,11 @@ class MarketService {
         if($apiType==='tc') { // 127.0.0.1/market/index.php/market/tc/market_e/NORTH POINT MARKET
             array_shift($parameters);
             $name = array_shift($parameters);
-            if(!isset($name)){
+            if($name == ''){
                 $output = array();
                 $output['status'] = 'error';
-                $output['code'] = '999';
-                $output['message'] = "Invalid Market Name" ;
+                $output['code'] = '1002';
+                $output['message'] = "Market Name can not be null" ;
                 echo json_encode($output, JSON_UNESCAPED_UNICODE);
                 exit;
             }
@@ -122,7 +153,14 @@ class MarketService {
                 while ($row = $dbresult->fetch_assoc()) {
                     $output[] = $row;
                 }
-                echo json_encode($output, JSON_UNESCAPED_UNICODE);
+                if(count($output) > 0){
+                    echo json_encode($output, JSON_UNESCAPED_UNICODE);
+                } else {
+                    $output['status'] = 'error';
+                    $output['code'] = '1003';
+                    $output['message'] = "Invalid Market Name" ;
+                    echo json_encode($output, JSON_UNESCAPED_UNICODE);
+                }
                 exit;
             } 
             catch (Exception $e) {
@@ -139,15 +177,15 @@ class MarketService {
             // search records by Region
             array_shift($parameters);
             $tc = array_shift($parameters);
-            // if (!isset($Region_e)|($Region_e=="")) {
-            //     $output = array();
-            //     $output['status'] = 'error';
-            //     $output['code'] = '1001';
-            //     $output['message'] = 'Missing Region';
-            //     echo json_encode($output, JSON_UNESCAPED_UNICODE);
-            //     exit;
-            // }
-            $sql = "SELECT mID, Market_e, Region_e, District_e, Address_e, Business_Hours_e, Contact_1, Contact_2, Tenancy_Commodity_e 
+            if (!isset($tc)|($tc=="")) {
+                $output = array();
+                $output['status'] = 'error';
+                $output['code'] = '1007';
+                $output['message'] = 'Missing Tenancy Commodity';
+                echo json_encode($output, JSON_UNESCAPED_UNICODE);
+                exit;
+            }
+            $sql = "SELECT mID, Market_e, Market_c, Region_e, Region_c, District_e, District_c, Address_e, Address_c, Business_Hours_e, Business_Hours_c, Coordinate, Contact_1, Contact_2, Tenancy_Commodity_e, Tenancy_Commodity_c, nos_stall 
                     FROM market WHERE Tenancy_Commodity_e LIKE '%$tc%'";
             try {
                 $dbresult = $conn->query($sql);
@@ -173,15 +211,15 @@ class MarketService {
         if ($apiType==='Region_e') { // 127.0.0.1/market/index.php/market/Region_e/Kowloon
             // search records by Region
             $Region_e = array_shift($parameters);
-            // if (!isset($Region_e)|($Region_e=="")) {
-            //     $output = array();
-            //     $output['status'] = 'error';
-            //     $output['code'] = '1001';
-            //     $output['message'] = 'Missing Region';
-            //     echo json_encode($output, JSON_UNESCAPED_UNICODE);
-            //     exit;
-            // }
-            $sql = "SELECT mID, Market_e, Region_e, District_e, Address_e, Business_Hours_e, Contact_1, Contact_2, Tenancy_Commodity_e FROM market WHERE Region_e like '%$Region_e%'";
+            if (!isset($Region_e)|($Region_e=="")) {
+                $output = array();
+                $output['status'] = 'error';
+                $output['code'] = '1006';
+                $output['message'] = 'Missing Region';
+                echo json_encode($output, JSON_UNESCAPED_UNICODE);
+                exit;
+            }
+            $sql = "SELECT mID, Market_e, Market_c, Region_e, Region_c, District_e, District_c, Address_e, Address_c, Business_Hours_e, Business_Hours_c, Coordinate, Contact_1, Contact_2, Tenancy_Commodity_e, Tenancy_Commodity_c, nos_stall FROM market WHERE Region_e like '%$Region_e%'";
             try {
                 $dbresult = $conn->query($sql);
                 // successfully retrieved the records
@@ -203,15 +241,15 @@ class MarketService {
 
         } elseif ($apiType==='District_e') { // 127.0.0.1/market/index.php/market/District_e/{district_e}
            $District_e = array_shift($parameters);
-        //    if (!isset($District_e)|($District_e=="")) {
-        //        $output = array();
-        //        $output['status'] = 'error';
-        //        $output['code'] = '2001';
-        //        $output['message'] = 'Missing District';
-        //        echo json_encode($output, JSON_UNESCAPED_UNICODE);
-        //        exit;
-        //    }
-           $sql = "SELECT mID, Market_e, Region_e, District_e, Address_e, Business_Hours_e, Contact_1, Contact_2, Tenancy_Commodity_e FROM market WHERE District_e like '%$District_e%'";
+           if (!isset($District_e)|($District_e=="")) {
+               $output = array();
+               $output['status'] = 'error';
+               $output['code'] = '1005';
+               $output['message'] = 'Missing District';
+               echo json_encode($output, JSON_UNESCAPED_UNICODE);
+               exit;
+           }
+           $sql = "SELECT mID, Market_e, Market_c, Region_e, Region_c, District_e, District_c, Address_e, Address_c, Business_Hours_e, Business_Hours_c, Coordinate, Contact_1, Contact_2, Tenancy_Commodity_e, Tenancy_Commodity_c, nos_stall FROM market WHERE District_e like '%$District_e%'";
            try {
                $dbresult = $conn->query($sql);
                $output = array();
@@ -232,11 +270,11 @@ class MarketService {
 
         } elseif ($apiType==='Market_e') { // 127.0.0.1/market/index.php/market/Market_e/Queen
             $Market_e = array_shift($parameters);
-            if (!isset($Market_e)|($Market_e=="")) {
+            if (!isset($Market_e) || ($Market_e=="")) {
                 $output = array();
                 $output['status'] = 'error';
-                $output['code'] = '3001';
-                $output['message'] = 'Missing Market';
+                $output['code'] = '1004';
+                $output['message'] = 'Missing Market name';
                 echo json_encode($output, JSON_UNESCAPED_UNICODE);
                 exit;
             }
@@ -291,10 +329,25 @@ class MarketService {
     }
 
     function PUT() {
+        $output = array();
         $body = file_get_contents('php://input');
         $dataArray = json_decode($body, true); // true means return an array
-        $mID = $dataArray['mID'];
-        $Market_e = $dataArray['Market_e'];
+        $mID = isset($dataArray['mID']) ? $dataArray['mID'] : '';
+        if($mID == ''){
+            $output['status'] = 'error';
+            $output['code'] = '3002';
+            $output['message'] = 'Update Function: Market ID cannot be null';
+            echo json_encode($output);
+            exit;
+        }
+        $Market_e = isset($dataArray['Market_e']) ? $dataArray['Market_e'] : '';
+        if($Market_e == ''){
+            $output['status'] = 'error';
+            $output['code'] = '3003';
+            $output['message'] = 'Update Function: Market Name (e) cannot be null';
+            echo json_encode($output);
+            exit;
+        }
         $Market_c = $dataArray['Market_c'];
         $Region_e = $dataArray['Region_e'];
         $Region_c = $dataArray['Region_c'];
@@ -324,9 +377,14 @@ class MarketService {
                  nos_stall='{$nos_stall}' WHERE mID=$mID";
         try {
             $dbresult = $conn->query($sql);
-            $output = array();
-            $output['status'] = 'success';
-            $output['message'] = "Market with ID $mID updated successfully";
+            if($conn->affected_rows > 0){
+                $output['status'] = 'success';
+                $output['message'] = "Market with ID $mID updated successfully";
+            } else {
+                $output['status'] = 'error';
+                $output['code'] = '3001';
+                $output['message'] = 'Update Function: Market ID Not found';
+            }
             echo json_encode($output);
             exit;
         } 
@@ -405,8 +463,14 @@ class MarketService {
         try {
             $dbresult = $conn->query($sql);
             $output = array();
-            $output['status'] = 'success';
-            $output['message'] = "Market ID $mID successfully deleted";
+            if($conn->affected_rows > 0){
+                $output['status'] = 'success';
+                $output['message'] = "Market ID $mID successfully deleted";
+            } else {
+                $output['status'] = 'error';
+                $output['code'] = '4001';
+                $output['message'] = 'Delete Function: Market ID Not found';
+            }
             echo json_encode($output, JSON_UNESCAPED_UNICODE);
             exit;
         } 

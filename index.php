@@ -42,6 +42,12 @@ header('Content-Type: application/json; charset=utf-8');
 
                 $method = $_SERVER['REQUEST_METHOD'];
                 $provider->$method($this->urlSegments);
+                
+                $output = array();
+                $output['status'] = 'error';
+                $output['code'] = '999';
+                $output['message'] = "Invalid API" ;
+                echo json_encode($output, JSON_UNESCAPED_UNICODE);
             }
     }
     
