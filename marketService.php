@@ -34,80 +34,54 @@ class MarketService {
             if($field == 'district'){ // 127.0.0.1/market/index.php/market/field/district/Kowloon
                 $region = array_shift($parameters);
                 $output = array();
-                if($region == ''){
-                    $sql = "SELECT DISTINCT Region_e FROM market m;";
-                    try {
-                        $dbresult = $conn->query($sql);
-                        // successfully retrieved the records
-                        $output = array();
-                        while ($row = $dbresult->fetch_assoc()) {
-                            $output[] = $row;
-                        }
+                $sql = "SELECT DISTINCT District_e FROM market m WHERE Region_e = '$region';";
+                try {
+                    $dbresult = $conn->query($sql);
+                    // successfully retrieved the records
+                    $output = array();
+                    while ($row = $dbresult->fetch_assoc()) {
+                        $output[] = $row;
+                    }
+                    if(count($output)>0){
                         echo json_encode($output, JSON_UNESCAPED_UNICODE);
-                        exit;
-                    } 
-                    catch (Exception $e) {
+                    } else {
                         $output = array();
                         $output['status'] = 'error';
-                        $output['code'] = '1000';
-                        $output['message'] = "SQL execution failure" ;
+                        $output['code'] = '1001';
+                        $output['message'] = "Region '$region' does not exist" ;
                         echo json_encode($output, JSON_UNESCAPED_UNICODE);
-                        exit;
                     }
-                } else {
-                    $sql = "SELECT DISTINCT District_e FROM market m WHERE Region_e = '$region';";
-                    try {
-                        $dbresult = $conn->query($sql);
-                        // successfully retrieved the records
-                        $output = array();
-                        while ($row = $dbresult->fetch_assoc()) {
-                            $output[] = $row;
-                        }
-                        if(count($output)>0){
-                            echo json_encode($output, JSON_UNESCAPED_UNICODE);
-                        } else {
-                            $output = array();
-                            $output['status'] = 'error';
-                            $output['code'] = '1001';
-                            $output['message'] = "Region '$region' does not exist" ;
-                            echo json_encode($output, JSON_UNESCAPED_UNICODE);
-                        }
-                        exit;
-                    } 
-                    catch (Exception $e) {
-                        $output = array();
-                        $output['status'] = 'error';
-                        $output['code'] = '1000';
-                        $output['message'] = "SQL execution failure" ;
-                        echo json_encode($output, JSON_UNESCAPED_UNICODE);
-                        exit;
-                    }
-
+                    exit;
+                } 
+                catch (Exception $e) {
+                    $output = array();
+                    $output['status'] = 'error';
+                    $output['code'] = '1000';
+                    $output['message'] = "SQL execution failure" ;
+                    echo json_encode($output, JSON_UNESCAPED_UNICODE);
+                    exit;
                 }
             }
-            // if($field == 'district'){
-            //     $district = array_shift($parameters);
-            //     $output = array();
-            //     $sql = "SELECT DISTINCT market_e FROM market m WHERE district_e = '$district';";
-            //     try {
-            //         $dbresult = $conn->query($sql);
-            //         // successfully retrieved the records
-            //         $output = array();
-            //         while ($row = $dbresult->fetch_assoc()) {
-            //             $output[] = $row;
-            //         }
-            //         echo json_encode($output, JSON_UNESCAPED_UNICODE);
-            //         exit;
-            //     } 
-            //     catch (Exception $e) {
-            //         $output = array();
-            //         $output['status'] = 'error';
-            //         $output['code'] = '1000';
-            //         $output['message'] = "District $district does not exist" ;
-            //         echo json_encode($output, JSON_UNESCAPED_UNICODE);
-            //         exit;
-            //     }
-            // }
+            if($field == 'region'){
+                $sql = "SELECT DISTINCT Region_e FROM market m;";
+                try {
+                    $dbresult = $conn->query($sql);
+                    // successfully retrieved the records
+                    $output = array();
+                    while ($row = $dbresult->fetch_assoc()) {
+                        $output[] = $row;
+                    }
+                    echo json_encode($output, JSON_UNESCAPED_UNICODE);
+                    exit;
+                } catch (Exception $e) {
+                    $output = array();
+                    $output['status'] = 'error';
+                    $output['code'] = '1000';
+                    $output['message'] = "SQL execution failure";
+                    echo json_encode($output, JSON_UNESCAPED_UNICODE);
+                    exit;
+                }
+            }
             if($field == 'tc'){ // 127.0.0.1/market/index.php/market/field/tc
                 $region = array_shift($parameters);
                 $output = array();
