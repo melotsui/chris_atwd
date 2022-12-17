@@ -31,7 +31,7 @@ class MarketService {
         }
         if($apiType==='field') { 
             $field = array_shift($parameters);
-            if($field == 'region'){ // 127.0.0.1/market/index.php/market/field/region/Kowloon
+            if($field == 'district'){ // 127.0.0.1/market/index.php/market/field/district/Kowloon
                 $region = array_shift($parameters);
                 $output = array();
                 if($region == ''){
@@ -402,7 +402,13 @@ class MarketService {
     {
         $body = file_get_contents('php://input');
         $dataArray = json_decode($body, true); // true means return an array
-        $mID = $dataArray['mID'];
+        if($body == '') {
+            $output['status'] = 'error';
+            $output['code'] = '2001';
+            $output['message'] = 'Request body cannot be null';
+            echo json_encode($output);
+            exit;
+        }
         $Market_e = $dataArray['Market_e'];
         $Market_c = $dataArray['Market_c'];
         $Region_e = $dataArray['Region_e'];
@@ -430,8 +436,14 @@ class MarketService {
         try {
             $dbresult = $conn->query($sql);
             $output = array();
-            $output['status'] = 'success';
-            $output['message'] = "Market with ID $mID inserted successfully";
+            if($conn->affected_rows > 0) {
+                $output['status'] = 'success';
+                $output['message'] = "Market: $Market_e inserted successfully";
+            } else {
+                $output['status'] = 'error';
+                $output['code'] = '2002';
+                $output['message'] = 'Fail to add market';
+            }
             echo json_encode($output);
             exit;
         } catch (Exception $e) {

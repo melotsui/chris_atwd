@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "0c443521-9ef7-4281-8f52-d3b742b7954f",
+		"_postman_id": "d7748123-a29e-4917-84c7-39107ef4db05",
 		"name": "chris's atwd",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19846583"
 	},
 	"item": [
 		{
@@ -281,6 +282,25 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "2001: add market",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/market/index.php/market",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"market",
+								"index.php",
+								"market"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -331,7 +351,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{domain}}/market/index.php/market/field/region/kowloon",
+					"raw": "{{domain}}/market/index.php/market/field/district/kowloon",
 					"host": [
 						"{{domain}}"
 					],
@@ -340,7 +360,7 @@
 						"index.php",
 						"market",
 						"field",
-						"region",
+						"district",
 						"kowloon"
 					]
 				}
@@ -540,6 +560,34 @@
 						"market",
 						"District_e",
 						"kowloon"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Market",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"mID\": \"900\",\r\n        \"Market_e\": \"TY IVE MARKET\",\r\n        \"Market_c\": \"青衣IVE街市\",\r\n        \"Region_e\": \"Hong Kong & Islands\",\r\n        \"Region_c\": \"香港及離島\",\r\n        \"District_e\": \"Eastern\",\r\n        \"District_c\": \"東區\",\r\n        \"Address_e\": \"TY IVE\",\r\n        \"Address_c\": \"青衣IVE\",\r\n        \"Business_Hours_e\": \"6:00 a.m. to 8:00 p.m.\",\r\n        \"Business_Hours_c\": \"上午6時正至晚上8時正\",\r\n        \"Coordinate\": \"22.29123,114.20548\",\r\n        \"Contact_1\": \"25641381\",\r\n        \"Contact_2\": \"25634340\",\r\n        \"Tenancy_Commodity_e\": \"Food Related Wet Goods\",\r\n        \"Tenancy_Commodity_c\": \"食物類濕貨\",\r\n        \"nos_stall\": \"1\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/market/index.php/market",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"market",
+						"index.php",
+						"market"
 					]
 				}
 			},
